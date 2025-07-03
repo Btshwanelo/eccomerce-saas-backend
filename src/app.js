@@ -14,20 +14,16 @@ const app = express();
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("../swagger.json");
-const v2SwaggerDocument = require("../v2-swagger.json");
 const mergedSwaggerDocument = {
   ...swaggerDocument,
   paths: {
     ...swaggerDocument.paths,
-    ...v2SwaggerDocument.paths
   },
   components: {
     ...swaggerDocument.components,
-    ...v2SwaggerDocument.components
   },
   tags: [
     ...swaggerDocument.tags,
-    ...v2SwaggerDocument.tags
   ]
 }
 // CORS configuration
@@ -95,7 +91,7 @@ app.use(
 
 
 
-//v2 APIs
+//V1 APIs
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/categories', categoryRoutes);
