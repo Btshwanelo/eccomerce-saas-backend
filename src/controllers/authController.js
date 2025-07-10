@@ -3,9 +3,8 @@ const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 const crypto = require('crypto');
-const { sendEmail, renderTemplate } = require('../../utils/emailTemplates/index'); 
-
-
+const { renderTemplate } = require('../utils/emailTemplates');
+const sendEmail = require('../utils/sendEmail');
 
 // Validation middleware
 exports.validateRegister = [
@@ -62,10 +61,10 @@ exports.register = asyncHandler(async (req, res) => {
   const emailBody = renderTemplate('welcome', { username: name });
 
   await sendEmail({
-  to: email,
-  subject: 'Welcome!',
-  text: emailBody,
-});
+    to: email,
+    subject: 'Welcome!',
+    html: emailBody,
+  });
 
   // Create user
   const user = await User.create({
@@ -192,7 +191,7 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
     await sendEmail({
       to: user.email,
       subject: 'Password Reset Request',
-      text: emailBody,
+      html: emailBody,
     });
 
     res.status(200).json({
@@ -279,7 +278,7 @@ exports.resetPassword = asyncHandler(async (req, res) => {
     await sendEmail({
       to: user.email,
       subject: 'Password Reset Successful',
-      text: confirmationEmailBody,
+      html: confirmationEmailBody,
     });
   } catch (emailError) {
     console.error('Confirmation email send error:', emailError);
