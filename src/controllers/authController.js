@@ -58,6 +58,11 @@ exports.register = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, error: 'Email already registered' });
   }
 
+  // Ensure password is provided
+  if (!password) {
+    return res.status(400).json({ success: false, error: 'Password is required' });
+  }
+
   const emailBody = renderTemplate('welcome', { username: name });
 
   await sendEmail({

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -34,10 +35,30 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+// Hash password before saving
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password') || !this.password) {
+    return next();
+  }
+  
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Match password method
+userSchema.methods.matchPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
 userSchema.methods.getSignedJwtToken = function () {
   return jwt.sign(
     { id: this._id, email: this.email, name: this.name, role: this.role },
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+    process.env.JWT_SECRET,
     { expiresIn: '30d' }
   );
 };

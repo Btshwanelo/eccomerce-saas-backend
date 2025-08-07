@@ -7,10 +7,26 @@ const Subcategory = require('../models/Subcategory');
 exports.createProduct = async (req, res) => {
   try {
     const { name, description, price, category, subcategory } = req.body;
+    
+    // Handle uploaded files
     let images = [];
     if (req.files && req.files.length > 0) {
-      images = req.files.map(file => ({ data: file.buffer, contentType: file.mimetype }));
+      // Process each uploaded file
+      for (const file of req.files) {
+        try {
+          // Upload file to external storage
+          const uploadResult = await uploadFileToStorage(file);
+          images.push(uploadResult);
+        } catch (uploadError) {
+          console.error('File upload failed:', uploadError);
+          return res.status(400).json({ 
+            success: false, 
+            error: `Failed to upload file ${file.originalname}: ${uploadError.message}` 
+          });
+        }
+      }
     }
+
     const product = new Product({
       name,
       description,
@@ -19,12 +35,38 @@ exports.createProduct = async (req, res) => {
       subcategory,
       images
     });
+    
     await product.save();
     res.status(201).json({ success: true, product });
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
   }
 };
+
+// Helper function to upload file to external storage
+async function uploadFileToStorage(file) {
+  const FormData = require('form-data');
+  const axios = require('axios');
+  
+  const form = new FormData();
+  form.append('file', file.buffer, {
+    filename: file.originalname,
+    contentType: file.mimetype
+  });
+
+  try {
+    const response = await axios.post('http://localhost:4000/upload', form, {
+      headers: {
+        ...form.getHeaders()
+      }
+    });
+
+    return response.data.file;
+  } catch (error) {
+    console.error('File upload failed:', error.response?.data || error.message);
+    throw new Error('Failed to upload file to storage');
+  }
+}
 
 // Get all products with filter, sort, pagination
 exports.getProducts = async (req, res) => {
@@ -67,9 +109,25 @@ exports.updateProduct = async (req, res) => {
   try {
     const { name, description, price, category, subcategory } = req.body;
     let update = { name, description, price, category, subcategory };
+    
+    // Handle new uploaded files
     if (req.files && req.files.length > 0) {
-      update.images = req.files.map(file => ({ data: file.buffer, contentType: file.mimetype }));
+      const newImages = [];
+      for (const file of req.files) {
+        try {
+          const uploadResult = await uploadFileToStorage(file);
+          newImages.push(uploadResult);
+        } catch (uploadError) {
+          console.error('File upload failed:', uploadError);
+          return res.status(400).json({ 
+            success: false, 
+            error: `Failed to upload file ${file.originalname}: ${uploadError.message}` 
+          });
+        }
+      }
+      update.images = newImages;
     }
+    
     const product = await Product.findByIdAndUpdate(req.params.id, update, { new: true });
     if (!product) return res.status(404).json({ success: false, error: 'Product not found' });
     res.json({ success: true, product });
