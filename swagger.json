@@ -5,9 +5,7 @@
     "version": "1.0.0",
     "description": "API documentation for the Ecommerce SaaS backend."
   },
-  "servers": [
-    { "url": "/api/v1" }
-  ],
+  "servers": [{ "url": "/api/v1" }],
   "tags": [
     { "name": "Auth" },
     { "name": "Products" },
@@ -46,7 +44,10 @@
           "price": { "type": "number" },
           "category": { "type": "string" },
           "subcategory": { "type": "string" },
-          "images": { "type": "array", "items": { "type": "string", "format": "binary" } }
+          "images": {
+            "type": "array",
+            "items": { "type": "string", "format": "binary" }
+          }
         }
       },
       "Category": {
@@ -149,7 +150,14 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Register a new user",
-        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } } },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/User" }
+            }
+          }
+        },
         "responses": { "200": { "description": "User registered" } }
       }
     },
@@ -157,7 +165,20 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Login user",
-        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "email": { "type": "string" }, "password": { "type": "string" } } } } } },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
         "responses": { "200": { "description": "User logged in" } }
       }
     },
@@ -165,92 +186,619 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Google OAuth login/register",
-        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "googleId": { "type": "string" }, "email": { "type": "string" }, "name": { "type": "string" } } } } } },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "googleId": { "type": "string" },
+                  "email": { "type": "string" },
+                  "name": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
         "responses": { "200": { "description": "Google user authenticated" } }
       }
     },
     "/products": {
-      "get": { "tags": ["Products"], "summary": "List products", "responses": { "200": { "description": "List of products" } } },
-      "post": { "tags": ["Products"], "summary": "Create product", "requestBody": { "required": true, "content": { "multipart/form-data": { "schema": { "$ref": "#/components/schemas/Product" } } } }, "responses": { "201": { "description": "Product created" } } }
+      "get": {
+        "tags": ["Products"],
+        "summary": "List products",
+        "responses": { "200": { "description": "List of products" } }
+      },
+      "post": {
+        "tags": ["Products"],
+        "summary": "Create product",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "$ref": "#/components/schemas/Product" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Product created" } }
+      }
     },
     "/products/{id}": {
-      "get": { "tags": ["Products"], "summary": "Get product by ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Product" } } },
-      "put": { "tags": ["Products"], "summary": "Update product", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "requestBody": { "required": true, "content": { "multipart/form-data": { "schema": { "$ref": "#/components/schemas/Product" } } } }, "responses": { "200": { "description": "Product updated" } } },
-      "delete": { "tags": ["Products"], "summary": "Delete product", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Product deleted" } } }
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get product by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Product" } }
+      },
+      "put": {
+        "tags": ["Products"],
+        "summary": "Update product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "$ref": "#/components/schemas/Product" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Product updated" } }
+      },
+      "delete": {
+        "tags": ["Products"],
+        "summary": "Delete product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Product deleted" } }
+      }
     },
     "/categories": {
-      "get": { "tags": ["Categories"], "summary": "List categories", "responses": { "200": { "description": "List of categories" } } },
-      "post": { "tags": ["Categories"], "summary": "Create category", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Category" } } } }, "responses": { "201": { "description": "Category created" } } }
+      "get": {
+        "tags": ["Categories"],
+        "summary": "List categories",
+        "responses": { "200": { "description": "List of categories" } }
+      },
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Create category",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Category" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Category created" } }
+      }
     },
     "/categories/{id}": {
-      "get": { "tags": ["Categories"], "summary": "Get category by ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Category" } } },
-      "put": { "tags": ["Categories"], "summary": "Update category", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Category" } } } }, "responses": { "200": { "description": "Category updated" } } },
-      "delete": { "tags": ["Categories"], "summary": "Delete category", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Category deleted" } } }
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get category by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Category" } }
+      },
+      "put": {
+        "tags": ["Categories"],
+        "summary": "Update category",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Category" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Category updated" } }
+      },
+      "delete": {
+        "tags": ["Categories"],
+        "summary": "Delete category",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Category deleted" } }
+      }
     },
     "/subcategories": {
-      "get": { "tags": ["Subcategories"], "summary": "List subcategories", "responses": { "200": { "description": "List of subcategories" } } },
-      "post": { "tags": ["Subcategories"], "summary": "Create subcategory", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Subcategory" } } } }, "responses": { "201": { "description": "Subcategory created" } } }
+      "get": {
+        "tags": ["Subcategories"],
+        "summary": "List subcategories",
+        "responses": { "200": { "description": "List of subcategories" } }
+      },
+      "post": {
+        "tags": ["Subcategories"],
+        "summary": "Create subcategory",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Subcategory" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Subcategory created" } }
+      }
     },
     "/subcategories/{id}": {
-      "get": { "tags": ["Subcategories"], "summary": "Get subcategory by ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Subcategory" } } },
-      "put": { "tags": ["Subcategories"], "summary": "Update subcategory", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Subcategory" } } } }, "responses": { "200": { "description": "Subcategory updated" } } },
-      "delete": { "tags": ["Subcategories"], "summary": "Delete subcategory", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Subcategory deleted" } } }
+      "get": {
+        "tags": ["Subcategories"],
+        "summary": "Get subcategory by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Subcategory" } }
+      },
+      "put": {
+        "tags": ["Subcategories"],
+        "summary": "Update subcategory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Subcategory" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Subcategory updated" } }
+      },
+      "delete": {
+        "tags": ["Subcategories"],
+        "summary": "Delete subcategory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Subcategory deleted" } }
+      }
     },
     "/cart": {
-      "get": { "tags": ["Cart"], "summary": "Get user cart", "responses": { "200": { "description": "Cart" } } }
+      "get": {
+        "tags": ["Cart"],
+        "summary": "Get user cart",
+        "responses": { "200": { "description": "Cart" } }
+      }
     },
     "/cart/add": {
-      "post": { "tags": ["Cart"], "summary": "Add item to cart", "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "productId": { "type": "string" }, "quantity": { "type": "integer" } } } } } }, "responses": { "200": { "description": "Item added to cart" } } }
+      "post": {
+        "tags": ["Cart"],
+        "summary": "Add item to cart",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": { "type": "string" },
+                  "quantity": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Item added to cart" } }
+      }
     },
     "/cart/update": {
-      "put": { "tags": ["Cart"], "summary": "Update cart item quantity", "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "productId": { "type": "string" }, "quantity": { "type": "integer" } } } } } }, "responses": { "200": { "description": "Cart item updated" } } }
+      "put": {
+        "tags": ["Cart"],
+        "summary": "Update cart item quantity",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": { "type": "string" },
+                  "quantity": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Cart item updated" } }
+      }
     },
     "/cart/remove": {
-      "delete": { "tags": ["Cart"], "summary": "Remove item from cart", "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "productId": { "type": "string" } } } } } }, "responses": { "200": { "description": "Item removed from cart" } } }
+      "delete": {
+        "tags": ["Cart"],
+        "summary": "Remove item from cart",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "productId": { "type": "string" } }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Item removed from cart" } }
+      }
     },
     "/cart/clear": {
-      "delete": { "tags": ["Cart"], "summary": "Clear cart", "responses": { "200": { "description": "Cart cleared" } } }
+      "delete": {
+        "tags": ["Cart"],
+        "summary": "Clear cart",
+        "responses": { "200": { "description": "Cart cleared" } }
+      }
     },
     "/delivery/address": {
-      "post": { "tags": ["Delivery"], "summary": "Create address", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Address" } } } }, "responses": { "201": { "description": "Address created" } } },
-      "get": { "tags": ["Delivery"], "summary": "List addresses", "responses": { "200": { "description": "List of addresses" } } }
+      "post": {
+        "tags": ["Delivery"],
+        "summary": "Create address",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Address" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Address created" } }
+      },
+      "get": {
+        "tags": ["Delivery"],
+        "summary": "List addresses",
+        "responses": { "200": { "description": "List of addresses" } }
+      }
     },
     "/delivery/address/{id}": {
-      "get": { "tags": ["Delivery"], "summary": "Get address by ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Address" } } },
-      "put": { "tags": ["Delivery"], "summary": "Update address", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Address" } } } }, "responses": { "200": { "description": "Address updated" } } },
-      "delete": { "tags": ["Delivery"], "summary": "Delete address", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Address deleted" } } }
+      "get": {
+        "tags": ["Delivery"],
+        "summary": "Get address by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Address" } }
+      },
+      "put": {
+        "tags": ["Delivery"],
+        "summary": "Update address",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Address" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Address updated" } }
+      },
+      "delete": {
+        "tags": ["Delivery"],
+        "summary": "Delete address",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Address deleted" } }
+      }
     },
     "/delivery/option": {
-      "post": { "tags": ["Delivery"], "summary": "Create delivery option (admin)", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DeliveryOption" } } } }, "responses": { "201": { "description": "Delivery option created" } } },
-      "get": { "tags": ["Delivery"], "summary": "List delivery options", "responses": { "200": { "description": "List of delivery options" } } }
+      "post": {
+        "tags": ["Delivery"],
+        "summary": "Create delivery option (admin)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DeliveryOption" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Delivery option created" } }
+      },
+      "get": {
+        "tags": ["Delivery"],
+        "summary": "List delivery options",
+        "responses": { "200": { "description": "List of delivery options" } }
+      }
     },
     "/delivery/option/{id}": {
-      "get": { "tags": ["Delivery"], "summary": "Get delivery option by ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Delivery option" } } },
-      "put": { "tags": ["Delivery"], "summary": "Update delivery option (admin)", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DeliveryOption" } } } }, "responses": { "200": { "description": "Delivery option updated" } } },
-      "delete": { "tags": ["Delivery"], "summary": "Delete delivery option (admin)", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Delivery option deleted" } } }
+      "get": {
+        "tags": ["Delivery"],
+        "summary": "Get delivery option by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Delivery option" } }
+      },
+      "put": {
+        "tags": ["Delivery"],
+        "summary": "Update delivery option (admin)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DeliveryOption" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Delivery option updated" } }
+      },
+      "delete": {
+        "tags": ["Delivery"],
+        "summary": "Delete delivery option (admin)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Delivery option deleted" } }
+      }
     },
     "/orders": {
-      "post": { "tags": ["Orders"], "summary": "Place order", "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "addressId": { "type": "string" }, "deliveryOptionId": { "type": "string" } } } } } }, "responses": { "201": { "description": "Order placed" } } },
-      "get": { "tags": ["Orders"], "summary": "List user orders", "responses": { "200": { "description": "List of orders" } } }
+      "post": {
+        "tags": ["Orders"],
+        "summary": "Place order",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "addressId": { "type": "string" },
+                  "deliveryOptionId": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Order placed" } }
+      },
+      "get": {
+        "tags": ["Orders"],
+        "summary": "List user orders",
+        "responses": { "200": { "description": "List of orders" } }
+      }
     },
     "/orders/{id}": {
-      "get": { "tags": ["Orders"], "summary": "Get order by ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Order" } } },
-      "put": { "tags": ["Orders"], "summary": "Update order status (admin)", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "status": { "type": "string" } } } } } }, "responses": { "200": { "description": "Order status updated" } } },
-      "delete": { "tags": ["Orders"], "summary": "Cancel order", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Order cancelled" } } }
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get order by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Order" } }
+      },
+      "put": {
+        "tags": ["Orders"],
+        "summary": "Update order status (admin)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "status": { "type": "string" } }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Order status updated" } }
+      },
+      "delete": {
+        "tags": ["Orders"],
+        "summary": "Cancel order",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Order cancelled" } }
+      }
     },
     "/payments": {
-      "post": { "tags": ["Payments"], "summary": "Create payment for order", "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "orderId": { "type": "string" }, "amount": { "type": "number" }, "method": { "type": "string" } } } } } }, "responses": { "201": { "description": "Payment created" } } },
-      "get": { "tags": ["Payments"], "summary": "List user payments", "responses": { "200": { "description": "List of payments" } } }
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Create payment for order",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderId": { "type": "string" },
+                  "amount": { "type": "number" },
+                  "method": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Payment created" } }
+      },
+      "get": {
+        "tags": ["Payments"],
+        "summary": "List user payments",
+        "responses": { "200": { "description": "List of payments" } }
+      }
     },
     "/payments/{id}": {
-      "get": { "tags": ["Payments"], "summary": "Get payment by ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Payment" } } },
-      "put": { "tags": ["Payments"], "summary": "Update payment status (admin)", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "status": { "type": "string" } } } } } }, "responses": { "200": { "description": "Payment status updated" } } }
+      "get": {
+        "tags": ["Payments"],
+        "summary": "Get payment by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "Payment" } }
+      },
+      "put": {
+        "tags": ["Payments"],
+        "summary": "Update payment status (admin)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "status": { "type": "string" } }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Payment status updated" } }
+      }
     },
     "/payments/payfast-url": {
-      "post": { "tags": ["PayFast"], "summary": "Get PayFast payment URL for order", "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "orderId": { "type": "string" } } } } } }, "responses": { "200": { "description": "PayFast payment URL" } } }
+      "post": {
+        "tags": ["PayFast"],
+        "summary": "Get PayFast payment URL for order",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "orderId": { "type": "string" } }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "PayFast payment URL" } }
+      }
     },
     "/payments/payfast-itn": {
-      "post": { "tags": ["PayFast"], "summary": "PayFast ITN webhook", "requestBody": { "required": true, "content": { "application/x-www-form-urlencoded": { "schema": { "type": "object" } } } }, "responses": { "200": { "description": "ITN received" } } }
+      "post": {
+        "tags": ["PayFast"],
+        "summary": "PayFast ITN webhook",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": { "type": "object" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "ITN received" } }
+      }
     }
   }
-} 
+}
