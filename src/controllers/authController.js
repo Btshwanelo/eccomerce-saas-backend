@@ -1,4 +1,3 @@
-// controllers/authController.js
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');

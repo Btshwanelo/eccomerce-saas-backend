@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
 
-const categorySchema = new mongoose.Schema({
+const filterGroupSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
-    trim: true,
   },
   slug: {
     type: String,
@@ -13,19 +11,9 @@ const categorySchema = new mongoose.Schema({
     unique: true,
   },
   description: { type: String },
-  categoryType: {
-    type: String,
-    enum: [
-      "apparel",
-      "footwear",
-      "books",
-      "furniture",
-      "electronics",
-      "home",
-      "sports",
-      "beauty",
-      "accessories",
-    ],
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
     required: true,
   },
   isActive: { type: Boolean, default: true },
@@ -33,4 +21,4 @@ const categorySchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Category", categorySchema);
+module.exports = mongoose.model("FilterGroup", filterGroupSchema);

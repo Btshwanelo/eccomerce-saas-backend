@@ -1,24 +1,20 @@
 const mongoose = require("mongoose");
 
-const subcategorySchema = new mongoose.Schema({
+const brandSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
     trim: true,
   },
   slug: {
     type: String,
     required: true,
-  },
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
-    required: true,
+    unique: true,
   },
   description: { type: String },
   isActive: { type: Boolean, default: true },
-  sortOrder: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Subcategory", subcategorySchema);
+module.exports = mongoose.model("Brand", brandSchema);

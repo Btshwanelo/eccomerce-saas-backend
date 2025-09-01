@@ -6,33 +6,32 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   email: {
     type: String,
     required: true,
     unique: true,
     lowercase: true,
-    trim: true
+    trim: true,
   },
   password: {
     type: String,
-    required: false // Not required for Google-auth users
+    required: false,
   },
   googleId: {
     type: String,
-    required: false
+    required: false,
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
-    default: 'user',
-    required: true
+    enum: ["user", "admin"],
+    default: "user",
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 // Hash password before saving
