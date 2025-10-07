@@ -13,6 +13,23 @@ const productAttributeSchema = new mongoose.Schema({
   displayValue: { type: String },
 });
 
+// Schema for product variants (size/color combinations with quantities)
+const productVariantSchema = new mongoose.Schema({
+  sku: { type: String, unique: true, sparse: true }, // sparse allows multiple nulls
+  attributes: [productAttributeSchema], // Size, color, etc.
+  quantity: { type: Number, default: 0 },
+  price: { type: Number }, // Optional: variant-specific pricing
+  salePrice: { type: Number }, // Optional: variant-specific sale pricing
+  images: [{
+    id: String,
+    filename: String,
+    downloadUrl: String,
+    directUrl: String,
+    isPrimary: { type: Boolean, default: false },
+  }],
+  isActive: { type: Boolean, default: true },
+});
+
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -56,18 +73,20 @@ const productSchema = new mongoose.Schema({
       type: String,
       enum: [
         "coming_soon",
-        "just_dropped",
         "trending",
         "exclusive",
-        "new_in",
+        "new",
         "sale",
         "bestseller",
       ],
     },
   ],
 
-  // Dynamic attributes based on category filters
+  // Dynamic attributes based on category filters (for simple products)
   attributes: [productAttributeSchema],
+
+  // Product variants for size/color combinations with individual quantities
+  variants: [productVariantSchema],
 
   // Category-specific fields stored as flexible object
   specificFields: {

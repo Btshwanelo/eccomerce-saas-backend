@@ -38,10 +38,11 @@ exports.createProduct = async (req, res) => {
       brand,
       tags,
       attributes,
+      variants, // New: variants array
       specificFields,
       inventory,
     } = req.body;
-
+    console.log("Request body:", req.body);
     // Generate slug from name
     const slug = name
       .toLowerCase()
@@ -73,6 +74,43 @@ exports.createProduct = async (req, res) => {
       }
     }
 
+    // Parse attributes JSON string if it exists
+    let parsedAttributes = [];
+    if (attributes) {
+      try {
+        parsedAttributes =
+          typeof attributes === "string" ? JSON.parse(attributes) : attributes;
+      } catch (parseError) {
+        console.error("Attributes parse error:", parseError);
+        return res.status(400).json({
+          success: false,
+          error: "Invalid JSON format for attributes field",
+        });
+      }
+    }
+
+    // Parse and process variants
+    let parsedVariants = [];
+    if (variants) {
+      try {
+        parsedVariants =
+          typeof variants === "string" ? JSON.parse(variants) : variants;
+
+        // Generate SKUs for variants if not provided
+        parsedVariants = parsedVariants.map((variant, index) => ({
+          ...variant,
+          sku: variant.sku || `${slug}-variant-${index + 1}`,
+          isActive: variant.isActive !== undefined ? variant.isActive : true,
+        }));
+      } catch (parseError) {
+        console.error("Variants parse error:", parseError);
+        return res.status(400).json({
+          success: false,
+          error: "Invalid JSON format for variants field",
+        });
+      }
+    }
+
     const product = new Product({
       name,
       slug,
@@ -83,14 +121,22 @@ exports.createProduct = async (req, res) => {
       subcategory,
       brand,
       tags: tags ? (Array.isArray(tags) ? tags : [tags]) : [],
-      attributes: attributes || [],
+      attributes: parsedAttributes,
+      variants: parsedVariants,
       specificFields: specificFields || {},
       inventory: inventory || { quantity: 0, trackQuantity: true },
       images,
     });
 
     await product.save();
-    await product.populate(["category", "subcategory", "brand"]);
+    await product.populate([
+      "category",
+      "subcategory",
+      "brand",
+      "attributes.filter",
+      "variants.attributes.filter",
+    ]);
+
     res.status(201).json({ success: true, product });
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
@@ -112,8 +158,11 @@ exports.getProducts = async (req, res) => {
       status = "active",
       tags,
       search,
+      // Dynamic attribute filters using filter IDs
+      ...otherParams
     } = req.query;
 
+    console.log("Query params:", req.query);
     const filter = { status };
 
     if (category) filter.category = category;
@@ -134,6 +183,101 @@ exports.getProducts = async (req, res) => {
       ];
     }
 
+    // Handle attribute-based filters using filter IDs
+    const attributeFilters = [];
+    const knownParams = [
+      "page",
+      "limit",
+      "sort",
+      "category",
+      "subcategory",
+      "brand",
+      "minPrice",
+      "maxPrice",
+      "status",
+      "tags",
+      "search",
+    ];
+
+    // Get all active filters to validate filter IDs
+    const Filter = require("../models/Filter");
+    const allFilters = await Filter.find({ isActive: true });
+    const validFilterIds = new Set(allFilters.map((f) => f._id.toString()));
+
+    // Process attribute filters from query params
+    for (const [key, value] of Object.entries(otherParams)) {
+      // Skip known non-attribute parameters
+      if (knownParams.includes(key)) {
+        continue;
+      }
+
+      // Check if this key is a valid filter ID
+      if (validFilterIds.has(key)) {
+        const filterId = key;
+        const values = Array.isArray(value) ? value : [value];
+
+        // Add attribute filter condition
+        attributeFilters.push({
+          filter: filterId,
+          value: { $in: values },
+        });
+      }
+    }
+
+    // Add attribute filters to the main filter
+    if (attributeFilters.length > 0) {
+      filter["attributes"] = {
+        $all: attributeFilters.map((attrFilter) => ({
+          $elemMatch: attrFilter,
+        })),
+      };
+    }
+
+    // Get available filters for the category
+    let availableFilters = [];
+    if (category) {
+      const FilterGroup = require("../models/FilterGroup");
+
+      // Find filter groups for this category
+      const filterGroups = await FilterGroup.find({
+        category: category,
+        isActive: true,
+      }).sort({ sortOrder: 1 });
+
+      if (filterGroups.length > 0) {
+        const filterGroupIds = filterGroups.map((group) => group._id);
+
+        // Find all active filters for these filter groups
+        const filters = await Filter.find({
+          filterGroup: { $in: filterGroupIds },
+          isActive: true,
+        })
+          .populate("filterGroup", "name slug")
+          .sort({ sortOrder: 1 });
+
+        // Get product counts for each filter option
+        for (const filterDoc of filters) {
+          const filterWithCounts = filterDoc.toObject();
+
+          // Update option counts based on actual products
+          for (const option of filterWithCounts.options) {
+            const productCount = await Product.countDocuments({
+              ...filter,
+              attributes: {
+                $elemMatch: {
+                  filter: filterDoc._id,
+                  value: option.value,
+                },
+              },
+            });
+            option.count = productCount;
+          }
+
+          availableFilters.push(filterWithCounts);
+        }
+      }
+    }
+
     const products = await Product.find(filter)
       .populate(["category", "subcategory", "brand"])
       .sort(sort)
@@ -148,6 +292,95 @@ exports.getProducts = async (req, res) => {
       total,
       page: Number(page),
       pages: Math.ceil(total / limit),
+      filters: availableFilters,
+    });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+};
+// Get products with trending and new tags
+exports.getCategoryProducts = async (req, res) => {
+  try {
+    const {
+      page = 1,
+      limit = 20,
+      sort = "-createdAt",
+      category,
+      subcategory,
+      brand,
+      minPrice,
+      maxPrice,
+      status = "active",
+      search,
+    } = req.query;
+
+    // Base filter for all products
+    const baseFilter = { status };
+
+    if (category) baseFilter.category = category;
+    if (subcategory) baseFilter.subcategory = subcategory;
+    if (brand) baseFilter.brand = brand;
+
+    if (minPrice || maxPrice) {
+      baseFilter.price = {};
+      if (minPrice) baseFilter.price.$gte = Number(minPrice);
+      if (maxPrice) baseFilter.price.$lte = Number(maxPrice);
+    }
+
+    if (search) {
+      baseFilter.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    // Create separate filters for trending and new products
+    const trendingFilter = {
+      ...baseFilter,
+      tags: { $in: ["trending"] },
+    };
+
+    const newFilter = {
+      ...baseFilter,
+      tags: { $in: ["new"] },
+    };
+
+    // Execute both queries concurrently
+    const [trendingProducts, newProducts] = await Promise.all([
+      Product.find(trendingFilter)
+        .populate(["category", "subcategory", "brand"])
+        .sort(sort)
+        .skip((page - 1) * limit)
+        .limit(Number(limit)),
+
+      Product.find(newFilter)
+        .populate(["category", "subcategory", "brand"])
+        .sort(sort)
+        .skip((page - 1) * limit)
+        .limit(Number(limit)),
+    ]);
+
+    // Get total counts for pagination
+    const [trendingTotal, newTotal] = await Promise.all([
+      Product.countDocuments(trendingFilter),
+      Product.countDocuments(newFilter),
+    ]);
+
+    const totalProducts = trendingTotal + newTotal;
+
+    res.json({
+      success: true,
+      products: {
+        new: newProducts,
+        trending: trendingProducts,
+      },
+      total: totalProducts,
+      counts: {
+        new: newTotal,
+        trending: trendingTotal,
+      },
+      page: Number(page),
+      pages: Math.ceil(totalProducts / limit),
     });
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
@@ -214,8 +447,10 @@ exports.updateProduct = async (req, res) => {
       status,
       tags,
       attributes,
+      variants,
       specificFields,
       inventory,
+      existingImages,
     } = req.body;
 
     let updateData = {
@@ -243,20 +478,58 @@ exports.updateProduct = async (req, res) => {
       updateData.slug = slug;
     }
 
+    // Parse and process variants
+    let parsedVariants = [];
+    if (variants) {
+      try {
+        parsedVariants =
+          typeof variants === "string" ? JSON.parse(variants) : variants;
+
+        // Generate SKUs for variants if not provided
+        parsedVariants = parsedVariants.map((variant, index) => ({
+          ...variant,
+          sku:
+            variant.sku ||
+            `${updateData.slug || "product"}-variant-${index + 1}`,
+          isActive: variant.isActive !== undefined ? variant.isActive : true,
+        }));
+        updateData.variants = parsedVariants;
+      } catch (parseError) {
+        console.error("Variants parse error:", parseError);
+        return res.status(400).json({
+          success: false,
+          error: "Invalid JSON format for variants field",
+        });
+      }
+    }
+
+    // Handle existing images
+    let allImages = [];
+    if (existingImages) {
+      try {
+        const parsedExistingImages =
+          typeof existingImages === "string"
+            ? JSON.parse(existingImages)
+            : existingImages;
+        allImages = [...parsedExistingImages];
+      } catch (parseError) {
+        console.error("Existing images parse error:", parseError);
+      }
+    }
+
     // Handle new uploaded files
     if (req.files && req.files.length > 0) {
-      const newImages = [];
       for (const file of req.files) {
         try {
           const uploadResult = await uploadFileToStorage(file);
-          newImages.push({
+          allImages.push({
             id:
               uploadResult.id ||
               `img_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             filename: uploadResult.filename,
             downloadUrl: uploadResult.downloadUrl,
             directUrl: uploadResult.directUrl,
-            isPrimary: newImages.length === 0,
+            isPrimary: allImages.length === 1, // First image is primary
           });
         } catch (uploadError) {
           console.error("File upload failed:", uploadError);
@@ -266,12 +539,22 @@ exports.updateProduct = async (req, res) => {
           });
         }
       }
-      updateData.images = newImages;
+    }
+
+    // Update images if we have any
+    if (allImages.length > 0) {
+      updateData.images = allImages;
     }
 
     const product = await Product.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
-    }).populate(["category", "subcategory", "brand", "attributes.filter"]);
+    }).populate([
+      "category",
+      "subcategory",
+      "brand",
+      "attributes.filter",
+      "variants.attributes.filter",
+    ]);
     if (!product)
       return res
         .status(404)

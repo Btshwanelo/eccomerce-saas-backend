@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -57,7 +61,7 @@ userSchema.methods.matchPassword = async function(enteredPassword) {
 userSchema.methods.getSignedJwtToken = function () {
   return jwt.sign(
     { id: this._id, email: this.email, name: this.name, role: this.role },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET || 'fallback-secret-key',
     { expiresIn: '30d' }
   );
 };

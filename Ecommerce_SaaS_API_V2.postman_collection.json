@@ -1,0 +1,2747 @@
+{
+  "info": {
+    "name": "Ecommerce SaaS API V2",
+    "description": "Comprehensive collection for testing v2 APIs with advanced filtering capabilities and complete file upload support. Includes file upload functionality for products (with multiple images), product variants, brands (logo), categories (image), users (avatar), and patterns (pattern image) with 5MB file size limit and image-only validation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "2.1.0"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/v2",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "productId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "categoryId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "brandId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "cartId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "orderId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "orderNumber",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "addressId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "paymentId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "sessionId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "guestId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "deliveryOptionId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "patternId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "variantId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"profile\": {\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"phone\": \"+1234567890\"\n  },\n  \"preferences\": {\n    \"currency\": \"USD\",\n    \"language\": \"en\",\n    \"newsletter\": true\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "register"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.token) {",
+                  "        pm.collectionVariables.set('authToken', response.token);",
+                  "        pm.collectionVariables.set('userId', response.user._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.token) {",
+                  "        pm.collectionVariables.set('authToken', response.token);",
+                  "        pm.collectionVariables.set('userId', response.user._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/categories?page=1&limit=20&sort=sortOrder",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "sort",
+                  "value": "sortOrder"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Category Tree",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/categories/tree",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", "tree"]
+            }
+          }
+        },
+        {
+          "name": "Get Category by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/categories/{{categoryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", "{{categoryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Category by Slug",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/categories/slug/clothing",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", "slug", "clothing"]
+            }
+          }
+        },
+        {
+          "name": "Get Category Breadcrumb",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/categories/{{categoryId}}/breadcrumb",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", "{{categoryId}}", "breadcrumb"]
+            }
+          }
+        },
+        {
+          "name": "Create Category (Admin) - JSON",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Category\",\n  \"description\": \"Test category description\",\n  \"image\": \"https://example.com/image.jpg\",\n  \"parentCategory\": null,\n  \"isActive\": true,\n  \"sortOrder\": 1,\n  \"seo\": {\n    \"metaTitle\": \"Test Category - SEO Title\",\n    \"metaDescription\": \"Test category SEO description\",\n    \"keywords\": [\"test\", \"category\"]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.category._id) {",
+                  "        pm.collectionVariables.set('categoryId', response.category._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Category with Image Upload (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Test Category with Image",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Test category with image upload",
+                  "type": "text"
+                },
+                {
+                  "key": "parentCategory",
+                  "value": "",
+                  "type": "text"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "seo[metaTitle]",
+                  "value": "Test Category - SEO Title",
+                  "type": "text"
+                },
+                {
+                  "key": "seo[metaDescription]",
+                  "value": "Test category SEO description",
+                  "type": "text"
+                },
+                {
+                  "key": "seo[keywords]",
+                  "value": "test,category",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.category._id) {",
+                  "        pm.collectionVariables.set('categoryId', response.category._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Category (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Test Category\",\n  \"description\": \"Updated test category description\",\n  \"isActive\": true,\n  \"sortOrder\": 2,\n  \"seo\": {\n    \"metaTitle\": \"Updated Test Category - SEO Title\",\n    \"metaDescription\": \"Updated test category SEO description\",\n    \"keywords\": [\"updated\", \"test\", \"category\"]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categories/{{categoryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", "{{categoryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Category with Image Upload (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Updated Category with New Image",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Updated category with new image upload",
+                  "type": "text"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "2",
+                  "type": "text"
+                },
+                {
+                  "key": "seo[metaTitle]",
+                  "value": "Updated Category - SEO Title",
+                  "type": "text"
+                },
+                {
+                  "key": "seo[metaDescription]",
+                  "value": "Updated category SEO description",
+                  "type": "text"
+                },
+                {
+                  "key": "seo[keywords]",
+                  "value": "updated,test,category",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categories/{{categoryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", "{{categoryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Category (Admin)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/categories/{{categoryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", "{{categoryId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Brands",
+      "item": [
+        {
+          "name": "Get Brands",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/brands?page=1&limit=20&sort=name",
+              "host": ["{{baseUrl}}"],
+              "path": ["brands"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "sort",
+                  "value": "name"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Brand by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/brands/{{brandId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["brands", "{{brandId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Brand by Slug",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/brands/slug/nike",
+              "host": ["{{baseUrl}}"],
+              "path": ["brands", "slug", "nike"]
+            }
+          }
+        },
+        {
+          "name": "Create Brand (Admin) - JSON",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Brand\",\n  \"description\": \"Test brand description\",\n  \"logo\": \"https://example.com/logo.jpg\",\n  \"website\": \"https://testbrand.com\",\n  \"countryOrigin\": \"USA\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/brands",
+              "host": ["{{baseUrl}}"],
+              "path": ["brands"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.brand._id) {",
+                  "        pm.collectionVariables.set('brandId', response.brand._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Brand with Logo Upload (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Test Brand with Logo",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Test brand with logo upload",
+                  "type": "text"
+                },
+                {
+                  "key": "website",
+                  "value": "https://testbrand.com",
+                  "type": "text"
+                },
+                {
+                  "key": "countryOrigin",
+                  "value": "USA",
+                  "type": "text"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "logo",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/brands",
+              "host": ["{{baseUrl}}"],
+              "path": ["brands"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.brand._id) {",
+                  "        pm.collectionVariables.set('brandId', response.brand._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Brand (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Test Brand\",\n  \"description\": \"Updated test brand description\",\n  \"website\": \"https://updatedtestbrand.com\",\n  \"countryOrigin\": \"Canada\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/brands/{{brandId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["brands", "{{brandId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Brand with Logo Upload (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Updated Brand with New Logo",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Updated brand with new logo upload",
+                  "type": "text"
+                },
+                {
+                  "key": "website",
+                  "value": "https://updatedbrand.com",
+                  "type": "text"
+                },
+                {
+                  "key": "countryOrigin",
+                  "value": "Canada",
+                  "type": "text"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "logo",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/brands/{{brandId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["brands", "{{brandId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Brand (Admin)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/brands/{{brandId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["brands", "{{brandId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attributes",
+      "item": [
+        {
+          "name": "Colors",
+          "item": [
+            {
+              "name": "Get Colors",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/colors",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "colors"]
+                }
+              }
+            },
+            {
+              "name": "Create Color (Admin)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Red\",\n  \"hexCode\": \"#FF0000\",\n  \"rgbCode\": \"rgb(255, 0, 0)\",\n  \"description\": \"Bright red color\",\n  \"isActive\": true,\n  \"sortOrder\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/colors",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "colors"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sizes",
+          "item": [
+            {
+              "name": "Get Sizes",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/sizes?category=clothing",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "sizes"],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "clothing"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Create Size (Admin)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Medium\",\n  \"category\": \"clothing\",\n  \"numericValue\": 10,\n  \"measurements\": {\n    \"chest\": 40,\n    \"waist\": 32,\n    \"unit\": \"inches\"\n  },\n  \"isActive\": true,\n  \"sortOrder\": 2\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/sizes",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "sizes"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Materials",
+          "item": [
+            {
+              "name": "Get Materials",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/materials",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "materials"]
+                }
+              }
+            },
+            {
+              "name": "Create Material (Admin)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Cotton\",\n  \"description\": \"100% cotton material\",\n  \"composition\": [\n    {\n      \"material\": \"Cotton\",\n      \"percentage\": 100\n    }\n  ],\n  \"careInstructions\": [\"Machine wash cold\", \"Tumble dry low\"],\n  \"properties\": {\n    \"breathable\": true,\n    \"hypoallergenic\": true\n  },\n  \"isActive\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/materials",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "materials"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get All Attributes for Category",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/attributes/category/{{categoryId}}/all",
+              "host": ["{{baseUrl}}"],
+              "path": ["attributes", "category", "{{categoryId}}", "all"]
+            }
+          }
+        },
+        {
+          "name": "Patterns",
+          "item": [
+            {
+              "name": "Get Patterns",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/patterns",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "patterns"]
+                }
+              }
+            },
+            {
+              "name": "Get Pattern by ID",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/patterns/{{patternId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "patterns", "{{patternId}}"]
+                }
+              }
+            },
+            {
+              "name": "Get Pattern by Slug",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/patterns/slug/floral",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "patterns", "slug", "floral"]
+                }
+              }
+            },
+            {
+              "name": "Create Pattern (Admin) - JSON",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Floral Pattern\",\n  \"description\": \"Beautiful floral pattern\",\n  \"patternImage\": \"https://example.com/pattern.jpg\",\n  \"isActive\": true,\n  \"sortOrder\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/patterns",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "patterns"]
+                }
+              },
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {",
+                      "    const response = pm.response.json();",
+                      "    if (response.pattern._id) {",
+                      "        pm.collectionVariables.set('patternId', response.pattern._id);",
+                      "    }",
+                      "}"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Create Pattern with Image Upload (Admin)",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "Floral Pattern with Image",
+                      "type": "text"
+                    },
+                    {
+                      "key": "description",
+                      "value": "Beautiful floral pattern with image upload",
+                      "type": "text"
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "true",
+                      "type": "text"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "1",
+                      "type": "text"
+                    },
+                    {
+                      "key": "patternImage",
+                      "type": "file",
+                      "src": []
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/patterns",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "patterns"]
+                }
+              },
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 201) {",
+                      "    const response = pm.response.json();",
+                      "    if (response.pattern._id) {",
+                      "        pm.collectionVariables.set('patternId', response.pattern._id);",
+                      "    }",
+                      "}"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Update Pattern (Admin)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated Floral Pattern\",\n  \"description\": \"Updated beautiful floral pattern\",\n  \"isActive\": true,\n  \"sortOrder\": 2\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/patterns/{{patternId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "patterns", "{{patternId}}"]
+                }
+              }
+            },
+            {
+              "name": "Update Pattern with Image Upload (Admin)",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "Updated Floral Pattern with New Image",
+                      "type": "text"
+                    },
+                    {
+                      "key": "description",
+                      "value": "Updated beautiful floral pattern with new image upload",
+                      "type": "text"
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "true",
+                      "type": "text"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "2",
+                      "type": "text"
+                    },
+                    {
+                      "key": "patternImage",
+                      "type": "file",
+                      "src": []
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/patterns/{{patternId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "patterns", "{{patternId}}"]
+                }
+              }
+            },
+            {
+              "name": "Delete Pattern (Admin)",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "{{baseUrl}}/attributes/patterns/{{patternId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["attributes", "patterns", "{{patternId}}"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get Products - Basic",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products?page=1&limit=20&sort=newest",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "sort",
+                  "value": "newest"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Products - Advanced Filtering",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products?categoryId={{categoryId}}&brandId={{brandId}}&minPrice=50&maxPrice=200&sort=price-asc",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "categoryId",
+                  "value": "{{categoryId}}"
+                },
+                {
+                  "key": "brandId",
+                  "value": "{{brandId}}"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "50"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "200"
+                },
+                {
+                  "key": "sort",
+                  "value": "price-asc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/search?search=red shirt&categoryId={{categoryId}}&sort=relevance",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "search"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "red shirt"
+                },
+                {
+                  "key": "categoryId",
+                  "value": "{{categoryId}}"
+                },
+                {
+                  "key": "sort",
+                  "value": "relevance"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Trending Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/trending?limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "trending"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get New Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/new?limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "new"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Product by Slug",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/slug/test-product",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "slug", "test-product"]
+            }
+          }
+        },
+        {
+          "name": "Get Product Variants",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}/variants",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}", "variants"]
+            }
+          }
+        },
+        {
+          "name": "Get Filter Options",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/category/{{categoryId}}/filters",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "category", "{{categoryId}}", "filters"]
+            }
+          }
+        },
+        {
+          "name": "Create Product (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Product\",\n  \"description\": \"This is a test product description\",\n  \"shortDescription\": \"Test product\",\n  \"sku\": \"TEST-001\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"brandId\": \"{{brandId}}\",\n  \"productType\": \"simple\",\n  \"pricing\": {\n    \"basePrice\": 100,\n    \"salePrice\": 80,\n    \"costPrice\": 50,\n    \"currency\": \"USD\"\n  },\n  \"inventory\": {\n    \"trackInventory\": true,\n    \"stockQuantity\": 50,\n    \"stockStatus\": \"in_stock\",\n    \"lowStockThreshold\": 5,\n    \"allowBackorders\": false\n  },\n  \"dimensions\": {\n    \"length\": 30,\n    \"width\": 20,\n    \"height\": 5,\n    \"weight\": 0.5,\n    \"unit\": \"cm\"\n  },\n  \"seo\": {\n    \"metaTitle\": \"Test Product - SEO Title\",\n    \"metaDescription\": \"Test product SEO description\",\n    \"keywords\": [\"test\", \"product\"]\n  },\n  \"status\": \"published\",\n  \"visibility\": \"public\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.product._id) {",
+                  "        pm.collectionVariables.set('productId', response.product._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Product with Images (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Test Product with Images",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "This is a test product with image upload",
+                  "type": "text"
+                },
+                {
+                  "key": "shortDescription",
+                  "value": "Test product with images",
+                  "type": "text"
+                },
+                {
+                  "key": "sku",
+                  "value": "TEST-IMG-001",
+                  "type": "text"
+                },
+                {
+                  "key": "categoryId",
+                  "value": "{{categoryId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "brandId",
+                  "value": "{{brandId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "productType",
+                  "value": "simple",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[basePrice]",
+                  "value": "99.99",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[currency]",
+                  "value": "USD",
+                  "type": "text"
+                },
+                {
+                  "key": "inventory[stockQuantity]",
+                  "value": "50",
+                  "type": "text"
+                },
+                {
+                  "key": "inventory[stockStatus]",
+                  "value": "in_stock",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "published",
+                  "type": "text"
+                },
+                {
+                  "key": "visibility",
+                  "value": "public",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select multiple product image files (JPEG, PNG, WebP)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.product._id) {",
+                  "        pm.collectionVariables.set('productId', response.product._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Product with Images (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Updated Product with New Images",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Updated product with new image upload",
+                  "type": "text"
+                },
+                {
+                  "key": "shortDescription",
+                  "value": "Updated test product",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[basePrice]",
+                  "value": "119.99",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[currency]",
+                  "value": "USD",
+                  "type": "text"
+                },
+                {
+                  "key": "inventory[stockQuantity]",
+                  "value": "75",
+                  "type": "text"
+                },
+                {
+                  "key": "inventory[stockStatus]",
+                  "value": "in_stock",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "published",
+                  "type": "text"
+                },
+                {
+                  "key": "visibility",
+                  "value": "public",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select additional product image files (JPEG, PNG, WebP)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "Create Product Variant (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sku\": \"TEST-001-RED-M\",\n  \"pricing\": {\n    \"basePrice\": 100,\n    \"salePrice\": 80,\n    \"costPrice\": 50\n  },\n  \"inventory\": {\n    \"stockQuantity\": 25,\n    \"stockStatus\": \"in_stock\"\n  },\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}/variants",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}", "variants"]
+            }
+          }
+        },
+        {
+          "name": "Create Product Variant with Images (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "sku",
+                  "value": "TEST-IMG-001-RED-M",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[basePrice]",
+                  "value": "100",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[salePrice]",
+                  "value": "80",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[costPrice]",
+                  "value": "50",
+                  "type": "text"
+                },
+                {
+                  "key": "inventory[stockQuantity]",
+                  "value": "25",
+                  "type": "text"
+                },
+                {
+                  "key": "inventory[stockStatus]",
+                  "value": "in_stock",
+                  "type": "text"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select variant image files (JPEG, PNG, WebP)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}/variants",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}", "variants"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.variant._id) {",
+                  "        pm.collectionVariables.set('variantId', response.variant._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Product Variant with Images (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "sku",
+                  "value": "TEST-IMG-001-RED-M-UPDATED",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[basePrice]",
+                  "value": "110",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[salePrice]",
+                  "value": "90",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[costPrice]",
+                  "value": "55",
+                  "type": "text"
+                },
+                {
+                  "key": "inventory[stockQuantity]",
+                  "value": "30",
+                  "type": "text"
+                },
+                {
+                  "key": "inventory[stockStatus]",
+                  "value": "in_stock",
+                  "type": "text"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select updated variant image files (JPEG, PNG, WebP)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/variants/{{variantId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "variants", "{{variantId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/cart",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart"]
+            }
+          }
+        },
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cart/add",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "add"]
+            }
+          }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cart/items/{{cartId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "items", "{{cartId}}"]
+            }
+          }
+        },
+        {
+          "name": "Remove from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cart/items/{{cartId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "items", "{{cartId}}"]
+            }
+          }
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cart/clear",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "clear"]
+            }
+          }
+        },
+        {
+          "name": "Apply Coupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"couponCode\": \"SAVE10\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cart/coupon",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "coupon"]
+            }
+          }
+        },
+        {
+          "name": "Remove Coupon",
+          "request": {
+            "method": "DELETE",
+            "header": [
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cart/coupon",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "coupon"]
+            }
+          }
+        },
+        {
+          "name": "Merge Cart (Authenticated)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"session123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cart/merge",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "merge"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update User Profile - JSON",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"profile\": {\n    \"firstName\": \"John Updated\",\n    \"lastName\": \"Doe Updated\",\n    \"phone\": \"+1234567890\",\n    \"avatar\": \"https://example.com/avatar.jpg\"\n  },\n  \"preferences\": {\n    \"currency\": \"EUR\",\n    \"language\": \"en\",\n    \"newsletter\": false\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update User Profile with Avatar Upload",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "profile[firstName]",
+                  "value": "John Updated",
+                  "type": "text"
+                },
+                {
+                  "key": "profile[lastName]",
+                  "value": "Doe Updated",
+                  "type": "text"
+                },
+                {
+                  "key": "profile[phone]",
+                  "value": "+1234567890",
+                  "type": "text"
+                },
+                {
+                  "key": "preferences[currency]",
+                  "value": "EUR",
+                  "type": "text"
+                },
+                {
+                  "key": "preferences[language]",
+                  "value": "en",
+                  "type": "text"
+                },
+                {
+                  "key": "preferences[newsletter]",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"password123\",\n  \"newPassword\": \"newpassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/change-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "change-password"]
+            }
+          }
+        },
+        {
+          "name": "Get User Addresses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/addresses",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "addresses"]
+            }
+          }
+        },
+        {
+          "name": "Create Address",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"both\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"company\": \"Test Company\",\n  \"addressLine1\": \"123 Main St\",\n  \"addressLine2\": \"Apt 4B\",\n  \"city\": \"New York\",\n  \"state\": \"NY\",\n  \"postalCode\": \"10001\",\n  \"country\": \"USA\",\n  \"isDefault\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/addresses",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "addresses"]
+            }
+          }
+        },
+        {
+          "name": "Get All Users (Admin)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users?page=1&limit=20&role=customer",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "role",
+                  "value": "customer"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID (Admin)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update User (Admin) - JSON",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"customer\",\n  \"status\": \"active\",\n  \"profile\": {\n    \"firstName\": \"John Admin Updated\",\n    \"lastName\": \"Doe Admin Updated\",\n    \"phone\": \"+1234567890\",\n    \"avatar\": \"https://example.com/avatar.jpg\"\n  },\n  \"preferences\": {\n    \"currency\": \"USD\",\n    \"language\": \"en\",\n    \"newsletter\": true\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update User with Avatar Upload (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "role",
+                  "value": "customer",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "active",
+                  "type": "text"
+                },
+                {
+                  "key": "profile[firstName]",
+                  "value": "John Admin Updated",
+                  "type": "text"
+                },
+                {
+                  "key": "profile[lastName]",
+                  "value": "Doe Admin Updated",
+                  "type": "text"
+                },
+                {
+                  "key": "profile[phone]",
+                  "value": "+1234567890",
+                  "type": "text"
+                },
+                {
+                  "key": "preferences[currency]",
+                  "value": "USD",
+                  "type": "text"
+                },
+                {
+                  "key": "preferences[language]",
+                  "value": "en",
+                  "type": "text"
+                },
+                {
+                  "key": "preferences[newsletter]",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete User (Admin)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Advanced Filtering Examples",
+      "item": [
+        {
+          "name": "Filter by Multiple Attributes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products?categoryId={{categoryId}}&brandId={{brandId}}&genderId=gender123&minPrice=50&maxPrice=200&materialIds[]=mat1&materialIds[]=mat2&sort=price-asc",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "categoryId",
+                  "value": "{{categoryId}}"
+                },
+                {
+                  "key": "brandId",
+                  "value": "{{brandId}}"
+                },
+                {
+                  "key": "genderId",
+                  "value": "gender123"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "50"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "200"
+                },
+                {
+                  "key": "materialIds[]",
+                  "value": "mat1"
+                },
+                {
+                  "key": "materialIds[]",
+                  "value": "mat2"
+                },
+                {
+                  "key": "sort",
+                  "value": "price-asc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Stock Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products?stockStatus=in_stock&minStock=10&sort=popular",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "stockStatus",
+                  "value": "in_stock"
+                },
+                {
+                  "key": "minStock",
+                  "value": "10"
+                },
+                {
+                  "key": "sort",
+                  "value": "popular"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Rating",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products?minRating=4&sort=rating",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "minRating",
+                  "value": "4"
+                },
+                {
+                  "key": "sort",
+                  "value": "rating"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Date Range",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products?createdAfter=2024-01-01&createdBefore=2024-12-31&sort=newest",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "createdAfter",
+                  "value": "2024-01-01"
+                },
+                {
+                  "key": "createdBefore",
+                  "value": "2024-12-31"
+                },
+                {
+                  "key": "sort",
+                  "value": "newest"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Complex Search with Filters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/search?search=summer dress&categoryId={{categoryId}}&genderId=women&seasonId=summer&minPrice=30&maxPrice=150&sort=relevance",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "search"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "summer dress"
+                },
+                {
+                  "key": "categoryId",
+                  "value": "{{categoryId}}"
+                },
+                {
+                  "key": "genderId",
+                  "value": "women"
+                },
+                {
+                  "key": "seasonId",
+                  "value": "summer"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "30"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "150"
+                },
+                {
+                  "key": "sort",
+                  "value": "relevance"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Initiate Checkout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-session-id",
+                "value": "{{sessionId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-guest-id",
+                "value": "{{guestId}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/checkout/initiate",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "checkout", "initiate"]
+            }
+          }
+        },
+        {
+          "name": "Complete Checkout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-session-id",
+                "value": "{{sessionId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-guest-id",
+                "value": "{{guestId}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"addressId\": \"{{addressId}}\",\n  \"deliveryOptionId\": \"{{deliveryOptionId}}\",\n  \"paymentMethod\": \"credit_card\",\n  \"notes\": \"Please deliver during business hours\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/orders/checkout/complete",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "checkout", "complete"]
+            }
+          }
+        },
+        {
+          "name": "Get User Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-session-id",
+                "value": "{{sessionId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-guest-id",
+                "value": "{{guestId}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders?page=1&limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Addresses",
+      "item": [
+        {
+          "name": "Get User Addresses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-session-id",
+                "value": "{{sessionId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-guest-id",
+                "value": "{{guestId}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/addresses",
+              "host": ["{{baseUrl}}"],
+              "path": ["addresses"]
+            }
+          }
+        },
+        {
+          "name": "Create Address",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-session-id",
+                "value": "{{sessionId}}",
+                "type": "text"
+              },
+              {
+                "key": "x-guest-id",
+                "value": "{{guestId}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"shipping\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"company\": \"Acme Corp\",\n  \"address1\": \"123 Main St\",\n  \"address2\": \"Apt 4B\",\n  \"city\": \"New York\",\n  \"state\": \"NY\",\n  \"postalCode\": \"10001\",\n  \"country\": \"US\",\n  \"phone\": \"+1234567890\",\n  \"isDefault\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/addresses",
+              "host": ["{{baseUrl}}"],
+              "path": ["addresses"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delivery Options",
+      "item": [
+        {
+          "name": "Get Delivery Options",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/delivery",
+              "host": ["{{baseUrl}}"],
+              "path": ["delivery"]
+            }
+          }
+        },
+        {
+          "name": "Get Available Delivery Options",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/delivery/available?cartTotal=100&weight=2&region=US",
+              "host": ["{{baseUrl}}"],
+              "path": ["delivery", "available"],
+              "query": [
+                {
+                  "key": "cartTotal",
+                  "value": "100"
+                },
+                {
+                  "key": "weight",
+                  "value": "2"
+                },
+                {
+                  "key": "region",
+                  "value": "US"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Delivery Option by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/delivery/{{deliveryOptionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["delivery", "{{deliveryOptionId}}"]
+            }
+          }
+        },
+        {
+          "name": "Create Delivery Option (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Standard Shipping\",\n  \"description\": \"Standard delivery within 5-7 business days\",\n  \"cost\": 9.99,\n  \"estimatedDays\": {\n    \"min\": 5,\n    \"max\": 7\n  },\n  \"estimatedDeliveryTime\": \"5-7 business days\",\n  \"type\": \"standard\",\n  \"isActive\": true,\n  \"regions\": [\"US\", \"CA\"],\n  \"weightLimit\": 50,\n  \"freeShippingThreshold\": 100,\n  \"trackingSupported\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/delivery",
+              "host": ["{{baseUrl}}"],
+              "path": ["delivery"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.deliveryOption) {",
+                  "        pm.collectionVariables.set('deliveryOptionId', response.deliveryOption._id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Delivery Option (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Express Shipping\",\n  \"description\": \"Express delivery within 2-3 business days\",\n  \"cost\": 19.99,\n  \"estimatedDays\": {\n    \"min\": 2,\n    \"max\": 3\n  },\n  \"estimatedDeliveryTime\": \"2-3 business days\",\n  \"type\": \"express\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/delivery/{{deliveryOptionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["delivery", "{{deliveryOptionId}}"]
+            }
+          }
+        },
+        {
+          "name": "Toggle Delivery Option Status (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/delivery/{{deliveryOptionId}}/toggle-status",
+              "host": ["{{baseUrl}}"],
+              "path": ["delivery", "{{deliveryOptionId}}", "toggle-status"]
+            }
+          }
+        },
+        {
+          "name": "Delete Delivery Option (Admin)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/delivery/{{deliveryOptionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["delivery", "{{deliveryOptionId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "File Upload Examples",
+      "item": [
+        {
+          "name": "File Upload Documentation",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// File Upload Examples for V2 API",
+                  "//",
+                  "// This collection includes file upload support for:",
+                  "// 1. Products - Multiple images (images array)",
+                  "// 2. Brands - Logo upload (logo field)",
+                  "// 3. Categories - Image upload (image field)",
+                  "// 4. Users - Avatar upload (avatar field)",
+                  "// 5. Patterns - Pattern image upload (patternImage field)",
+                  "//",
+                  "// File Upload Requirements:",
+                  "// - Use multipart/form-data content type",
+                  "// - File size limit: 5MB",
+                  "// - Allowed file types: Images only (JPEG, PNG, WebP, etc.)",
+                  "// - Object storage service runs on port 4000",
+                  "// - Returns downloadUrl for file access",
+                  "//",
+                  "// Example Usage:",
+                  "// 1. Select a file upload request (e.g., 'Create Brand with Logo Upload')",
+                  "// 2. In the Body tab, select 'form-data'",
+                  "// 3. Click on the file field and select an image file",
+                  "// 4. Fill in other required fields",
+                  "// 5. Send the request",
+                  "//",
+                  "// The system will:",
+                  "// - Validate the file type and size",
+                  "// - Upload to object storage service",
+                  "// - Store the downloadUrl in the database",
+                  "// - Return the created/updated entity with file URL"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "File Upload Test - Brand Logo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Test Brand for File Upload",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Testing file upload functionality",
+                  "type": "text"
+                },
+                {
+                  "key": "website",
+                  "value": "https://testbrand.com",
+                  "type": "text"
+                },
+                {
+                  "key": "countryOrigin",
+                  "value": "USA",
+                  "type": "text"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "logo",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select a logo image file (JPEG, PNG, WebP)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/brands",
+              "host": ["{{baseUrl}}"],
+              "path": ["brands"]
+            }
+          }
+        },
+        {
+          "name": "File Upload Test - Category Image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Test Category for File Upload",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Testing category image upload",
+                  "type": "text"
+                },
+                {
+                  "key": "parentCategory",
+                  "value": "",
+                  "type": "text"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select a category image file (JPEG, PNG, WebP)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories"]
+            }
+          }
+        },
+        {
+          "name": "File Upload Test - User Avatar",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "profile[firstName]",
+                  "value": "Test User",
+                  "type": "text"
+                },
+                {
+                  "key": "profile[lastName]",
+                  "value": "File Upload Test",
+                  "type": "text"
+                },
+                {
+                  "key": "profile[phone]",
+                  "value": "+1234567890",
+                  "type": "text"
+                },
+                {
+                  "key": "preferences[currency]",
+                  "value": "USD",
+                  "type": "text"
+                },
+                {
+                  "key": "preferences[language]",
+                  "value": "en",
+                  "type": "text"
+                },
+                {
+                  "key": "preferences[newsletter]",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select an avatar image file (JPEG, PNG, WebP)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "File Upload Test - Pattern Image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Test Pattern for File Upload",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Testing pattern image upload",
+                  "type": "text"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "patternImage",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select a pattern image file (JPEG, PNG, WebP)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/attributes/patterns",
+              "host": ["{{baseUrl}}"],
+              "path": ["attributes", "patterns"]
+            }
+          }
+        },
+        {
+          "name": "File Upload Test - Product Images",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Test Product for File Upload",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Testing product image upload",
+                  "type": "text"
+                },
+                {
+                  "key": "shortDescription",
+                  "value": "Test product",
+                  "type": "text"
+                },
+                {
+                  "key": "sku",
+                  "value": "TEST-UPLOAD-001",
+                  "type": "text"
+                },
+                {
+                  "key": "categoryId",
+                  "value": "{{categoryId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "brandId",
+                  "value": "{{brandId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "productType",
+                  "value": "simple",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[basePrice]",
+                  "value": "99.99",
+                  "type": "text"
+                },
+                {
+                  "key": "pricing[currency]",
+                  "value": "USD",
+                  "type": "text"
+                },
+                {
+                  "key": "inventory[stockQuantity]",
+                  "value": "50",
+                  "type": "text"
+                },
+                {
+                  "key": "inventory[stockStatus]",
+                  "value": "in_stock",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "published",
+                  "type": "text"
+                },
+                {
+                  "key": "visibility",
+                  "value": "public",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select multiple product image files (JPEG, PNG, WebP)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

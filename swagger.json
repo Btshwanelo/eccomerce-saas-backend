@@ -9,8 +9,11 @@
   "tags": [
     { "name": "Auth" },
     { "name": "Products" },
+    { "name": "Brands" },
     { "name": "Categories" },
     { "name": "Subcategories" },
+    { "name": "Filters" },
+    { "name": "Filter Groups" },
     { "name": "Cart" },
     { "name": "Delivery" },
     { "name": "Orders" },
@@ -140,6 +143,58 @@
           "amount": { "type": "number" },
           "method": { "type": "string" },
           "status": { "type": "string" }
+        }
+      },
+      "Brand": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "slug": { "type": "string" },
+          "description": { "type": "string" },
+          "isActive": { "type": "boolean" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "FilterGroup": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "slug": { "type": "string" },
+          "description": { "type": "string" },
+          "category": { "type": "string" },
+          "isActive": { "type": "boolean" },
+          "sortOrder": { "type": "integer" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Filter": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "slug": { "type": "string" },
+          "type": { 
+            "type": "string", 
+            "enum": ["select", "multi-select"] 
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string" },
+                "value": { "type": "string" },
+                "count": { "type": "integer" }
+              }
+            }
+          },
+          "filterGroup": { "type": "string" },
+          "isGlobal": { "type": "boolean" },
+          "isActive": { "type": "boolean" },
+          "sortOrder": { "type": "integer" },
+          "createdAt": { "type": "string", "format": "date-time" }
         }
       }
     }

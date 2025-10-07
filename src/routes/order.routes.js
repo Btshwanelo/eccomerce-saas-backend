@@ -1,20 +1,24 @@
 const express = require("express");
-const { protect, adminOnly } = require('../middlewares/auth');
+const { protect, adminOnly } = require("../middlewares/auth");
 const router = express.Router();
-router.use(protect);
 const orderController = require("../controllers/orderController");
 
-// User routes
-router.post("/", orderController.createOrder);
-router.get("/my-orders", orderController.getUserOrders);
-router.get("/:id", orderController.getOrderById);
-router.get("/number/:orderNumber", orderController.getOrderByNumber);
-router.put("/:id/cancel", orderController.cancelOrder);
+// User routes (require authentication)
+router.post("/", protect, orderController.createOrder);
+router.get("/my-orders", protect, orderController.getUserOrders);
+router.get("/:id", protect, orderController.getOrderById);
+router.get("/number/:orderNumber", protect, orderController.getOrderByNumber);
+router.put("/:id/cancel", protect, orderController.cancelOrder);
 
-// Admin routes
-router.get("/", orderController.getAllOrders);
-router.put("/:id/status", orderController.updateOrderStatus);
-router.delete("/:id", orderController.deleteOrder);
-router.get("/admin/stats", orderController.getOrderStats);
+// Admin routes (require admin role)
+router.get("/", protect, adminOnly, orderController.getAllOrders);
+router.put(
+  "/:id/status",
+  protect,
+  adminOnly,
+  orderController.updateOrderStatus
+);
+router.delete("/:id", protect, adminOnly, orderController.deleteOrder);
+router.get("/stats", protect, adminOnly, orderController.getOrderStats);
 
 module.exports = router;

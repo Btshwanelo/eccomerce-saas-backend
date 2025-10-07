@@ -1,0 +1,858 @@
+{
+  "info": {
+    "name": "Ecommerce SaaS API",
+    "description": "Complete API collection for Ecommerce SaaS Backend with all updated routes and schemas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"customer\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"]}
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"]}
+          }
+        },
+        {
+          "name": "Google OAuth",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"googleId\": \"google_user_id\",\n  \"email\": \"user@gmail.com\",\n  \"name\": \"Google User\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/auth/google", "host": ["{{baseUrl}}"], "path": ["auth", "google"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/products", "host": ["{{baseUrl}}"], "path": ["products"]}
+          }
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {"key": "name", "value": "Sample Product", "type": "text"},
+                {"key": "description", "value": "Product description", "type": "text"},
+                {"key": "price", "value": "99.99", "type": "text"},
+                {"key": "category", "value": "category_id", "type": "text"},
+                {"key": "subcategory", "value": "subcategory_id", "type": "text"},
+                {"key": "images", "type": "file", "src": []}
+              ]
+            },
+            "url": {"raw": "{{baseUrl}}/products", "host": ["{{baseUrl}}"], "path": ["products"]}
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", ":id"],
+              "variable": [{"key": "id", "value": "product_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {"key": "name", "value": "Updated Product", "type": "text"},
+                {"key": "description", "value": "Updated description", "type": "text"},
+                {"key": "price", "value": "149.99", "type": "text"}
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", ":id"],
+              "variable": [{"key": "id", "value": "product_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/products/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", ":id"],
+              "variable": [{"key": "id", "value": "product_id_here"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Brands",
+      "item": [
+        {
+          "name": "Get All Brands",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/brand", "host": ["{{baseUrl}}"], "path": ["brand"]}
+          }
+        },
+        {
+          "name": "Create Brand",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nike\",\n  \"slug\": \"nike\",\n  \"description\": \"Just Do It\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/brand", "host": ["{{baseUrl}}"], "path": ["brand"]}
+          }
+        },
+        {
+          "name": "Get Brand by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/brand/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["brand", ":id"],
+              "variable": [{"key": "id", "value": "brand_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Get Brand by Slug",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/brand/slug/:slug",
+              "host": ["{{baseUrl}}"],
+              "path": ["brand", "slug", ":slug"],
+              "variable": [{"key": "slug", "value": "nike"}]
+            }
+          }
+        },
+        {
+          "name": "Update Brand",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nike Updated\",\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/brand/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["brand", ":id"],
+              "variable": [{"key": "id", "value": "brand_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Delete Brand",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/brand/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["brand", ":id"],
+              "variable": [{"key": "id", "value": "brand_id_here"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/categories", "host": ["{{baseUrl}}"], "path": ["categories"]}
+          }
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Electronics\",\n  \"description\": \"Electronic devices and accessories\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/categories", "host": ["{{baseUrl}}"], "path": ["categories"]}
+          }
+        },
+        {
+          "name": "Get Category by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/categories/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", ":id"],
+              "variable": [{"key": "id", "value": "category_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Electronics Updated\",\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categories/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", ":id"],
+              "variable": [{"key": "id", "value": "category_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/categories/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", ":id"],
+              "variable": [{"key": "id", "value": "category_id_here"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subcategories",
+      "item": [
+        {
+          "name": "Get All Subcategories",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/subcategories", "host": ["{{baseUrl}}"], "path": ["subcategories"]}
+          }
+        },
+        {
+          "name": "Create Subcategory",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Smartphones\",\n  \"category\": \"category_id_here\",\n  \"description\": \"Mobile phones and smartphones\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/subcategories", "host": ["{{baseUrl}}"], "path": ["subcategories"]}
+          }
+        },
+        {
+          "name": "Get Subcategory by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/subcategories/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["subcategories", ":id"],
+              "variable": [{"key": "id", "value": "subcategory_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Update Subcategory",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Smartphones Updated\",\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/subcategories/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["subcategories", ":id"],
+              "variable": [{"key": "id", "value": "subcategory_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Delete Subcategory",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/subcategories/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["subcategories", ":id"],
+              "variable": [{"key": "id", "value": "subcategory_id_here"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filters",
+      "item": [
+        {
+          "name": "Get All Filters",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/filter", "host": ["{{baseUrl}}"], "path": ["filter"]}
+          }
+        },
+        {
+          "name": "Get Filter by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/filter/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["filter", ":id"],
+              "variable": [{"key": "id", "value": "filter_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Get Filter by Slug",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/filter/slug/:slug",
+              "host": ["{{baseUrl}}"],
+              "path": ["filter", "slug", ":slug"],
+              "variable": [{"key": "slug", "value": "color"}]
+            }
+          }
+        },
+        {
+          "name": "Get Filters by Group",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/filter/group/:groupId",
+              "host": ["{{baseUrl}}"],
+              "path": ["filter", "group", ":groupId"],
+              "variable": [{"key": "groupId", "value": "group_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Get Global Filters",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/filter/global/all", "host": ["{{baseUrl}}"], "path": ["filter", "global", "all"]}
+          }
+        },
+        {
+          "name": "Create Filter (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Color\",\n  \"slug\": \"color\",\n  \"type\": \"select\",\n  \"options\": [\n    {\"label\": \"Red\", \"value\": \"red\", \"count\": 0},\n    {\"label\": \"Blue\", \"value\": \"blue\", \"count\": 0}\n  ],\n  \"filterGroup\": \"filter_group_id_here\",\n  \"isGlobal\": false,\n  \"sortOrder\": 1\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/filter", "host": ["{{baseUrl}}"], "path": ["filter"]}
+          }
+        },
+        {
+          "name": "Update Filter",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Color Updated\",\n  \"isActive\": true,\n  \"sortOrder\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/filter/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["filter", ":id"],
+              "variable": [{"key": "id", "value": "filter_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Delete Filter",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/filter/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["filter", ":id"],
+              "variable": [{"key": "id", "value": "filter_id_here"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filter Groups",
+      "item": [
+        {
+          "name": "Get All Filter Groups",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/filtergroup", "host": ["{{baseUrl}}"], "path": ["filtergroup"]}
+          }
+        },
+        {
+          "name": "Get Filter Group by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/filtergroup/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["filtergroup", ":id"],
+              "variable": [{"key": "id", "value": "filter_group_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Get Filter Group by Slug",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/filtergroup/slug/:slug",
+              "host": ["{{baseUrl}}"],
+              "path": ["filtergroup", "slug", ":slug"],
+              "variable": [{"key": "slug", "value": "appearance"}]
+            }
+          }
+        },
+        {
+          "name": "Create Filter Group (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Appearance\",\n  \"slug\": \"appearance\",\n  \"description\": \"Product appearance filters\",\n  \"category\": \"category_id_here\",\n  \"sortOrder\": 1\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/filtergroup", "host": ["{{baseUrl}}"], "path": ["filtergroup"]}
+          }
+        },
+        {
+          "name": "Update Filter Group",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Appearance Updated\",\n  \"description\": \"Updated description\",\n  \"sortOrder\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/filtergroup/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["filtergroup", ":id"],
+              "variable": [{"key": "id", "value": "filter_group_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Delete Filter Group",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/filtergroup/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["filtergroup", ":id"],
+              "variable": [{"key": "id", "value": "filter_group_id_here"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get User Cart",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/cart", "host": ["{{baseUrl}}"], "path": ["cart"]}
+          }
+        },
+        {
+          "name": "Add Item to Cart",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"product_id_here\",\n  \"quantity\": 2\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/cart/add", "host": ["{{baseUrl}}"], "path": ["cart", "add"]}
+          }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"product_id_here\",\n  \"quantity\": 3\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/cart/update", "host": ["{{baseUrl}}"], "path": ["cart", "update"]}
+          }
+        },
+        {
+          "name": "Remove Item from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"product_id_here\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/cart/remove", "host": ["{{baseUrl}}"], "path": ["cart", "remove"]}
+          }
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "url": {"raw": "{{baseUrl}}/cart/clear", "host": ["{{baseUrl}}"], "path": ["cart", "clear"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Addresses",
+      "item": [
+        {
+          "name": "Get All Addresses",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/address", "host": ["{{baseUrl}}"], "path": ["address"]}
+          }
+        },
+        {
+          "name": "Create Address",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"phone\": \"+1234567890\",\n  \"street\": \"123 Main St\",\n  \"city\": \"New York\",\n  \"state\": \"NY\",\n  \"postalCode\": \"10001\",\n  \"country\": \"USA\",\n  \"isDefault\": true\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/address", "host": ["{{baseUrl}}"], "path": ["address"]}
+          }
+        },
+        {
+          "name": "Get Address by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/address/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["address", ":id"],
+              "variable": [{"key": "id", "value": "address_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Update Address",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"street\": \"456 Oak Ave\",\n  \"city\": \"Los Angeles\",\n  \"state\": \"CA\",\n  \"postalCode\": \"90210\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/address/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["address", ":id"],
+              "variable": [{"key": "id", "value": "address_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Delete Address",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/address/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["address", ":id"],
+              "variable": [{"key": "id", "value": "address_id_here"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delivery",
+      "item": [
+        {
+          "name": "Get All Delivery Options",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/delivery/option", "host": ["{{baseUrl}}"], "path": ["delivery", "option"]}
+          }
+        },
+        {
+          "name": "Create Delivery Option (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Standard Delivery\",\n  \"description\": \"3-5 business days\",\n  \"price\": 5.99,\n  \"estimatedTime\": \"3-5 business days\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/delivery/option", "host": ["{{baseUrl}}"], "path": ["delivery", "option"]}
+          }
+        },
+        {
+          "name": "Get Delivery Option by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/delivery/option/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["delivery", "option", ":id"],
+              "variable": [{"key": "id", "value": "delivery_option_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Update Delivery Option (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Express Delivery\",\n  \"description\": \"1-2 business days\",\n  \"price\": 12.99,\n  \"estimatedTime\": \"1-2 business days\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/delivery/option/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["delivery", "option", ":id"],
+              "variable": [{"key": "id", "value": "delivery_option_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Delete Delivery Option (Admin)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/delivery/option/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["delivery", "option", ":id"],
+              "variable": [{"key": "id", "value": "delivery_option_id_here"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Get User Orders",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/orders", "host": ["{{baseUrl}}"], "path": ["orders"]}
+          }
+        },
+        {
+          "name": "Place Order",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"addressId\": \"address_id_here\",\n  \"deliveryOptionId\": \"delivery_option_id_here\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/orders", "host": ["{{baseUrl}}"], "path": ["orders"]}
+          }
+        },
+        {
+          "name": "Get Order by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/orders/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", ":id"],
+              "variable": [{"key": "id", "value": "order_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Update Order Status (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"shipped\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/orders/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", ":id"],
+              "variable": [{"key": "id", "value": "order_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/orders/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", ":id"],
+              "variable": [{"key": "id", "value": "order_id_here"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Get User Payments",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{baseUrl}}/payments", "host": ["{{baseUrl}}"], "path": ["payments"]}
+          }
+        },
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"order_id_here\",\n  \"amount\": 99.99,\n  \"method\": \"credit_card\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/payments", "host": ["{{baseUrl}}"], "path": ["payments"]}
+          }
+        },
+        {
+          "name": "Get Payment by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/payments/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", ":id"],
+              "variable": [{"key": "id", "value": "payment_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Update Payment Status (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payments/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", ":id"],
+              "variable": [{"key": "id", "value": "payment_id_here"}]
+            }
+          }
+        },
+        {
+          "name": "Get PayFast Payment URL",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"order_id_here\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/payments/payfast-url", "host": ["{{baseUrl}}"], "path": ["payments", "payfast-url"]}
+          }
+        },
+        {
+          "name": "PayFast ITN Webhook",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/x-www-form-urlencoded"}],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {"key": "payment_status", "value": "COMPLETE"},
+                {"key": "m_payment_id", "value": "payment_id_here"}
+              ]
+            },
+            "url": {"raw": "{{baseUrl}}/payments/payfast-itn", "host": ["{{baseUrl}}"], "path": ["payments", "payfast-itn"]}
+          }
+        }
+      ]
+    }
+  ]
+}

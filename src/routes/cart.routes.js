@@ -12,6 +12,4 @@ router.delete("/clear", cartController.clearCart);
 router.get("/count", cartController.getCartCount);
 router.get("/total", cartController.getCartTotal);
 
-module.exports = router;
-
 module.exports = router; 

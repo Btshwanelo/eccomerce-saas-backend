@@ -1,4 +1,5 @@
 const authRoutes = require("./routes/auth.routes");
+const userRoutes = require("./routes/user.routes");
 const productRoutes = require("./routes/product.routes");
 const categoryRoutes = require("./routes/category.routes");
 const subcategoryRoutes = require("./routes/subcategory.routes");
@@ -10,6 +11,18 @@ const addressRoutes = require("./routes/address.routes");
 const brandRoutes = require("./routes/brand.routes");
 const filterRoutes = require("./routes/filter.routes");
 const filterGroupRoutes = require("./routes/filterGroup.routes");
+const analyticsRoutes = require("./routes/analytics.routes");
+
+// V2 Routes
+const v2ProductRoutes = require("./routes/v2/product.routes");
+const v2CategoryRoutes = require("./routes/v2/category.routes");
+const v2BrandRoutes = require("./routes/v2/brand.routes");
+const v2AttributeRoutes = require("./routes/v2/attribute.routes");
+const v2UserRoutes = require("./routes/v2/user.routes");
+const v2CartRoutes = require("./routes/v2/cart.routes");
+const v2OrderRoutes = require("./routes/v2/order.routes");
+const v2AddressRoutes = require("./routes/v2/address.routes");
+const v2DeliveryRoutes = require("./routes/v2/delivery.routes");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -34,6 +47,7 @@ const corsOptions = {
     const allowedOrigins = [
       "http://localhost:3043", // Development
       "http://localhost:3000", // Development
+      "http://localhost:3001", // Development
       "https://dev-rapid-ideation-management-hzduckfpfffff6hr.canadacentral-01.azurewebsites.net", // Azure Dev
       "http://dev-rapid-ideation-management-hzduckfpfffff6hr.canadacentral-01.azurewebsites.net", // Azure Dev (HTTP)
       "https://rapid-ideation-management-hzduckfpfffff6hr.canadacentral-01.azurewebsites.net", // Azure Prod
@@ -92,8 +106,9 @@ app.use(
 
 //V1 APIs
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/products", productRoutes);
-app.use("/api/v1/brand", brandRoutes);
+app.use("/api/v1/brands", brandRoutes);
 app.use("/api/v1/address", addressRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/subcategories", subcategoryRoutes);
@@ -103,5 +118,17 @@ app.use("/api/v1/filter", filterRoutes);
 app.use("/api/v1/filtergroup", filterGroupRoutes);
 app.use("/api/v1/orders", orderRoutes);
 app.use("/api/v1/payments", paymentRoutes);
+app.use("/api/v1/analytics", analyticsRoutes);
+
+//V2 APIs
+app.use("/api/v2/products", v2ProductRoutes);
+app.use("/api/v2/categories", v2CategoryRoutes);
+app.use("/api/v2/brands", v2BrandRoutes);
+app.use("/api/v2/attributes", v2AttributeRoutes);
+app.use("/api/v2/users", v2UserRoutes);
+app.use("/api/v2/cart", v2CartRoutes);
+app.use("/api/v2/orders", v2OrderRoutes);
+app.use("/api/v2/addresses", v2AddressRoutes);
+app.use("/api/v2/delivery", v2DeliveryRoutes);
 
 module.exports = app;
