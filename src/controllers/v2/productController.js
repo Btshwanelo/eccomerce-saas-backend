@@ -16,7 +16,10 @@ const {
   CollarTypeV2,
 } = require("../../models/v2");
 
-const { uploadFileToStorage, validateImageFile } = require("../../utils/uploadFile");
+const {
+  uploadFileToStorage,
+  validateImageFile,
+} = require("../../utils/uploadFile");
 
 // Helper function to build filter query
 function buildProductFilter(query) {
@@ -147,7 +150,7 @@ exports.createProduct = async (req, res) => {
         try {
           // Validate file before upload
           validateImageFile(file);
-          
+
           const uploadResult = await uploadFileToStorage(file);
           images.push({
             url: uploadResult.downloadUrl, // Use downloadUrl as specified
@@ -444,7 +447,7 @@ exports.updateProduct = async (req, res) => {
         try {
           // Validate file before upload
           validateImageFile(file);
-          
+
           const uploadResult = await uploadFileToStorage(file);
           existingImages.push({
             url: uploadResult.downloadUrl, // Use downloadUrl as specified
@@ -543,7 +546,7 @@ exports.createProductVariant = async (req, res) => {
         try {
           // Validate file before upload
           validateImageFile(file);
-          
+
           const uploadResult = await uploadFileToStorage(file);
           variantImages.push({
             url: uploadResult.downloadUrl,
@@ -582,14 +585,16 @@ exports.updateProductVariant = async (req, res) => {
 
     // Handle new uploaded files for variant
     if (req.files && req.files.length > 0) {
-      const existingVariant = await ProductVariantV2.findById(req.params.variantId);
+      const existingVariant = await ProductVariantV2.findById(
+        req.params.variantId
+      );
       let existingImages = existingVariant ? existingVariant.images : [];
 
       for (const file of req.files) {
         try {
           // Validate file before upload
           validateImageFile(file);
-          
+
           const uploadResult = await uploadFileToStorage(file);
           existingImages.push({
             url: uploadResult.downloadUrl,
@@ -699,4 +704,3 @@ exports.getNewProducts = async (req, res) => {
     res.status(400).json({ success: false, error: err.message });
   }
 };
-

@@ -250,7 +250,7 @@ exports.completeCheckout = async (req, res) => {
     }
 
     // Check if address belongs to user (if authenticated)
-    if (userId && address.userId.toString() !== userId) {
+    if (userId.toString()  && address.userId.toString() !== userId.toString() ) {
       return res.status(403).json({
         success: false,
         error: 'Address does not belong to user'

@@ -1,7 +1,10 @@
 const { UserV2, AddressV2 } = require("../../models/v2");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { uploadFileToStorage, validateImageFile } = require("../../utils/uploadFile");
+const {
+  uploadFileToStorage,
+  validateImageFile,
+} = require("../../utils/uploadFile");
 
 // Helper function to generate JWT token
 const generateToken = (userId) => {
@@ -100,7 +103,6 @@ exports.login = async (req, res) => {
   }
 };
 
-
 // Get user profile
 exports.getProfile = async (req, res) => {
   try {
@@ -181,7 +183,10 @@ exports.changePassword = async (req, res) => {
     }
 
     // Check current password
-    const isCurrentPasswordValid = await bcrypt.compare(currentPassword, user.password);
+    const isCurrentPasswordValid = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
     if (!isCurrentPasswordValid) {
       return res.status(400).json({
         success: false,
@@ -343,7 +348,7 @@ exports.createAddress = async (req, res) => {
   try {
     const addressData = {
       ...req.body,
-      userId: req.user.userId,
+      userId: req.user._id,
     };
 
     // If this is set as default, unset other default addresses
@@ -366,7 +371,7 @@ exports.createAddress = async (req, res) => {
 // Get user addresses
 exports.getAddresses = async (req, res) => {
   try {
-    const addresses = await AddressV2.find({ userId: req.user.userId }).sort({
+    const addresses = await AddressV2.find({ userId: req.user._id }).sort({
       isDefault: -1,
       createdAt: -1,
     });
@@ -450,4 +455,3 @@ exports.deleteAddress = async (req, res) => {
     res.status(400).json({ success: false, error: err.message });
   }
 };
-
