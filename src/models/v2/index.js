@@ -802,7 +802,7 @@ const paymentSchema = new Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ["credit_card", "debit_card", "paypal", "stripe", "bank_transfer"],
+      enum: ["credit_card", "debit_card", "paypal", "stripe", "payfast"],
       required: true,
     },
     status: {
