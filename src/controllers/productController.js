@@ -12,7 +12,7 @@ async function uploadFileToStorage(file) {
   });
 
   try {
-    const response = await axios.post("http://localhost:4000/upload", form, {
+    const response = await axios.post(process.env.FILE_UPLOAD_URL, form, {
       headers: {
         ...form.getHeaders(),
       },

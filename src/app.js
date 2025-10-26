@@ -48,6 +48,10 @@ const corsOptions = {
       "http://localhost:3043", // Development
       "http://localhost:3000", // Development
       "http://localhost:3001", // Development
+      "http://localhost:3002", // Development
+      "http://localhost:3003", // Development
+      "http://localhost:3004", // Development
+      "http://localhost:3005", // Development
       "https://dev-rapid-ideation-management-hzduckfpfffff6hr.canadacentral-01.azurewebsites.net", // Azure Dev
       "http://dev-rapid-ideation-management-hzduckfpfffff6hr.canadacentral-01.azurewebsites.net", // Azure Dev (HTTP)
       "https://rapid-ideation-management-hzduckfpfffff6hr.canadacentral-01.azurewebsites.net", // Azure Prod
@@ -65,6 +69,18 @@ const corsOptions = {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
 
+    // Allow all localhost ports in development (3000-3010)
+    if (
+      origin.startsWith("http://localhost:") &&
+      process.env.NODE_ENV !== "production"
+    ) {
+      const port = origin.split(":")[2];
+      const portNumber = parseInt(port);
+      if (portNumber >= 3000 && portNumber <= 3010) {
+        return callback(null, true);
+      }
+    }
+
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -79,8 +95,7 @@ const corsOptions = {
   maxAge: 86400, // Cache preflight requests for 24 hours
 };
 
-app.use(cors(corsOptions));
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 

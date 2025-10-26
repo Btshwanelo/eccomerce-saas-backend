@@ -253,6 +253,101 @@ exports.getProducts = async (req, res) => {
   }
 };
 
+// Get products by category slug/name
+exports.getProductsByCategorySlug = async (req, res) => {
+  try {
+    const {
+      page = 1,
+      limit = 20,
+      sort = "-createdAt",
+      ...queryParams
+    } = req.query;
+
+    const { categorySlug } = req.params;
+
+    // Handle special categories
+    let filter = {};
+    
+    if (categorySlug === 'sales') {
+      // Filter for products with sale prices
+      filter = {
+        ...buildProductFilter(queryParams),
+        'pricing.salePrice': { $exists: true, $gt: 0 }
+      };
+    } else if (categorySlug === 'new') {
+      // Filter for new products (created in last 30 days)
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      
+      filter = {
+        ...buildProductFilter(queryParams),
+        createdAt: { $gte: thirtyDaysAgo }
+      };
+    } else {
+      // Find category by slug
+      const category = await CategoryV2.findOne({ slug: categorySlug });
+      
+      if (!category) {
+        return res.status(404).json({
+          success: false,
+          error: 'Category not found'
+        });
+      }
+
+      // Build filter with category ID
+      filter = buildProductFilter({
+        ...queryParams,
+        categoryId: category._id
+      });
+    }
+
+    const skip = (page - 1) * limit;
+
+    // Get products
+    const products = await ProductV2.find(filter)
+      .populate([
+        "categoryId",
+        "brandId",
+        "genderId",
+        "seasonId",
+        "styleId",
+        "materialIds",
+        "patternId",
+        "shoeHeightId",
+        "fitId",
+        "occasionIds",
+        "collarTypeId",
+        "images.colorId",
+      ])
+      .sort(sort)
+      .skip(skip)
+      .limit(Number(limit));
+
+    const total = await ProductV2.countDocuments(filter);
+
+    // Get available filters for the current category
+    let availableFilters = {};
+    if (categorySlug !== 'sales' && categorySlug !== 'new') {
+      const category = await CategoryV2.findOne({ slug: categorySlug });
+      if (category) {
+        availableFilters = await getAvailableFilters(category._id, filter);
+      }
+    }
+
+    res.json({
+      success: true,
+      products,
+      total,
+      page: Number(page),
+      pages: Math.ceil(total / limit),
+      filters: availableFilters,
+      category: categorySlug
+    });
+  } catch (err) {
+    res.status(400).json({ success: false, error: err.message });
+  }
+};
+
 // Get products with advanced search and filtering
 exports.searchProducts = async (req, res) => {
   try {

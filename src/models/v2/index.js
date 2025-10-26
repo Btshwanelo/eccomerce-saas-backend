@@ -36,7 +36,7 @@ const userSchema = new Schema(
       },
     ],
     preferences: {
-      currency: { type: String, default: "USD" },
+      currency: { type: String, default: "R" },
       language: { type: String, default: "en" },
       newsletter: { type: Boolean, default: false },
     },
@@ -388,7 +388,7 @@ const productSchema = new Schema(
       basePrice: { type: Number, required: true, index: true },
       salePrice: { type: Number, index: true },
       costPrice: Number,
-      currency: { type: String, default: "USD" },
+      currency: { type: String, default: "R" },
     },
 
     // Inventory (for simple products)
@@ -798,7 +798,7 @@ const paymentSchema = new Schema(
     },
     currency: {
       type: String,
-      default: "USD",
+      default: "R",
     },
     paymentMethod: {
       type: String,
@@ -807,7 +807,14 @@ const paymentSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "processing", "completed", "failed", "cancelled", "refunded"],
+      enum: [
+        "pending",
+        "processing",
+        "completed",
+        "failed",
+        "cancelled",
+        "refunded",
+      ],
       default: "pending",
     },
     paymentReference: {
@@ -849,7 +856,7 @@ const deliveryOptionSchema = new Schema(
     },
     description: {
       type: String,
-      default: '',
+      default: "",
     },
     cost: {
       type: Number,
@@ -862,12 +869,12 @@ const deliveryOptionSchema = new Schema(
     },
     estimatedDeliveryTime: {
       type: String,
-      default: '1-7 business days',
+      default: "1-7 business days",
     },
     type: {
       type: String,
-      enum: ['standard', 'express', 'overnight', 'pickup', 'free'],
-      default: 'standard',
+      enum: ["standard", "express", "overnight", "pickup", "free"],
+      default: "standard",
     },
     isActive: {
       type: Boolean,
@@ -876,7 +883,7 @@ const deliveryOptionSchema = new Schema(
     regions: [
       {
         type: String,
-        default: 'all',
+        default: "all",
       },
     ],
     weightLimit: {
@@ -933,4 +940,3 @@ module.exports = {
   CouponV2: mongoose.model("CouponV2", couponSchema),
   ReviewV2: mongoose.model("ReviewV2", reviewSchema),
 };
-

@@ -547,5 +547,5 @@ module.exports = {
   emailVerification,
   passwordResetRequest,
   passwordResetConfirmation,
-  welcome
+  welcome,
 };

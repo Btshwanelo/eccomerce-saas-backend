@@ -30,6 +30,7 @@ router.get("/:id", productController.getProductById);
 router.get("/slug/:slug", productController.getProductBySlug);
 router.get("/:productId/variants", productController.getProductVariants);
 router.get("/category/:categoryId/filters", productController.getFilterOptions);
+router.get("/category/slug/:categorySlug", productController.getProductsByCategorySlug);
 
 // Protected routes (admin only)
 router.post("/", protect, adminOnly, upload.array("images"), productController.createProduct);
