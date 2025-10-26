@@ -14,7 +14,7 @@ const {
   CollarTypeV2,
 } = require("../../models/v2");
 const { uploadFileToStorage, validateImageFile } = require("../../utils/uploadFile");
-const initialAttributesData = require("../data/initialAttributes.json");
+const initialAttributesData = require("../../data/initialAttributes.json");
 
 // Generic controller functions for attributes
 const createAttributeController = (Model, attributeName) => {
@@ -547,9 +547,6 @@ module.exports = {
   // Initialize all attributes from embedded JSON data
   initializeAttributes: async (req, res) => {
     try {
-      console.log('Starting attribute initialization...');
-      console.log('Initial attributes data loaded:', !!initialAttributesData);
-      
       const { 
         categories = [], 
         brands = [], 
@@ -565,22 +562,6 @@ module.exports = {
         occasions = [], 
         collarTypes = [] 
       } = initialAttributesData;
-      
-      console.log('Data counts:', {
-        categories: categories.length,
-        brands: brands.length,
-        colors: colors.length,
-        sizes: sizes.length,
-        materials: materials.length,
-        genders: genders.length,
-        seasons: seasons.length,
-        styles: styles.length,
-        patterns: patterns.length,
-        shoeHeights: shoeHeights.length,
-        fits: fits.length,
-        occasions: occasions.length,
-        collarTypes: collarTypes.length
-      });
 
       const results = {
         categories: { created: 0, skipped: 0, errors: [] },
@@ -703,12 +684,10 @@ module.exports = {
       });
 
     } catch (err) {
-      console.error('Error in initializeAttributes:', err);
       res.status(500).json({ 
         success: false, 
         error: err.message,
-        message: 'Failed to initialize attributes',
-        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+        message: 'Failed to initialize attributes'
       });
     }
   },
