@@ -52,18 +52,8 @@ const corsOptions = {
       "http://localhost:3003", // Development
       "http://localhost:3004", // Development
       "http://localhost:3005", // Development
-      "https://dev-rapid-ideation-management-hzduckfpfffff6hr.canadacentral-01.azurewebsites.net", // Azure Dev
-      "http://dev-rapid-ideation-management-hzduckfpfffff6hr.canadacentral-01.azurewebsites.net", // Azure Dev (HTTP)
-      "https://rapid-ideation-management-hzduckfpfffff6hr.canadacentral-01.azurewebsites.net", // Azure Prod
-      "http://rapid-ideation-management-hzduckfpfffff6hr.canadacentral-01.azurewebsites.net",
-      "https://dev-rapid-frontend-bzeyhbgeejebaegv.canadacentral-01.azurewebsites.net",
-      "http://dev-rapid-frontend-bzeyhbgeejebaegv.canadacentral-01.azurewebsites.net",
-      "https://demo-rapid-fe-h2e4c2gmhbbxb9az.canadacentral-01.azurewebsites.net",
-      "http://demo-rapid-fe-h2e4c2gmhbbxb9az.canadacentral-01.azurewebsites.net",
-      "https://rapid-frontend-bzeyhbgeejebaegv.canadacentral-01.azurewebsites.net",
-      "http://rapid-frontend-bzeyhbgeejebaegv.canadacentral-01.azurewebsites.net",
-      "https://dev-rapid-fe-fffucwf7grdfgbas.canadacentral-01.azurewebsites.net",
-      "http://dev-rapid-fe-fffucwf7grdfgbas.canadacentral-01.azurewebsites.net",
+      "http://109.199.122.35:3000",
+      "http://109.199.122.35:3002", // External frontend access
     ];
 
     // Allow requests with no origin (like mobile apps or curl requests)
@@ -95,7 +85,7 @@ const corsOptions = {
   maxAge: 86400, // Cache preflight requests for 24 hours
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.json());
 
