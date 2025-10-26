@@ -1,4 +1,6 @@
 const {
+  CategoryV2,
+  BrandV2,
   ColorV2,
   SizeV2,
   MaterialV2,
@@ -12,6 +14,7 @@ const {
   CollarTypeV2,
 } = require("../../models/v2");
 const { uploadFileToStorage, validateImageFile } = require("../../utils/uploadFile");
+const initialAttributesData = require("../data/initialAttributes.json");
 
 // Generic controller functions for attributes
 const createAttributeController = (Model, attributeName) => {
@@ -538,6 +541,175 @@ module.exports = {
       });
     } catch (err) {
       res.status(400).json({ success: false, error: err.message });
+    }
+  },
+
+  // Initialize all attributes from embedded JSON data
+  initializeAttributes: async (req, res) => {
+    try {
+      console.log('Starting attribute initialization...');
+      console.log('Initial attributes data loaded:', !!initialAttributesData);
+      
+      const { 
+        categories = [], 
+        brands = [], 
+        colors = [], 
+        sizes = [], 
+        materials = [], 
+        genders = [], 
+        seasons = [], 
+        styles = [], 
+        patterns = [], 
+        shoeHeights = [], 
+        fits = [], 
+        occasions = [], 
+        collarTypes = [] 
+      } = initialAttributesData;
+      
+      console.log('Data counts:', {
+        categories: categories.length,
+        brands: brands.length,
+        colors: colors.length,
+        sizes: sizes.length,
+        materials: materials.length,
+        genders: genders.length,
+        seasons: seasons.length,
+        styles: styles.length,
+        patterns: patterns.length,
+        shoeHeights: shoeHeights.length,
+        fits: fits.length,
+        occasions: occasions.length,
+        collarTypes: collarTypes.length
+      });
+
+      const results = {
+        categories: { created: 0, skipped: 0, errors: [] },
+        brands: { created: 0, skipped: 0, errors: [] },
+        colors: { created: 0, skipped: 0, errors: [] },
+        sizes: { created: 0, skipped: 0, errors: [] },
+        materials: { created: 0, skipped: 0, errors: [] },
+        genders: { created: 0, skipped: 0, errors: [] },
+        seasons: { created: 0, skipped: 0, errors: [] },
+        styles: { created: 0, skipped: 0, errors: [] },
+        patterns: { created: 0, skipped: 0, errors: [] },
+        shoeHeights: { created: 0, skipped: 0, errors: [] },
+        fits: { created: 0, skipped: 0, errors: [] },
+        occasions: { created: 0, skipped: 0, errors: [] },
+        collarTypes: { created: 0, skipped: 0, errors: [] },
+      };
+
+      // Helper function to create attributes with error handling
+      const createAttributes = async (Model, items, resultKey) => {
+        for (const item of items) {
+          try {
+            // Check if item already exists by slug
+            const existing = await Model.findOne({ slug: item.slug });
+            if (existing) {
+              results[resultKey].skipped++;
+              continue;
+            }
+
+            // Create new attribute
+            await Model.create(item);
+            results[resultKey].created++;
+          } catch (error) {
+            results[resultKey].errors.push({
+              item: item.name || item.slug,
+              error: error.message
+            });
+          }
+        }
+      };
+
+      // Process categories first (needed for hierarchical relationships)
+      if (categories.length > 0) {
+        await createAttributes(CategoryV2, categories, 'categories');
+      }
+
+      // Process brands
+      if (brands.length > 0) {
+        await createAttributes(BrandV2, brands, 'brands');
+      }
+
+      // Process colors
+      if (colors.length > 0) {
+        await createAttributes(ColorV2, colors, 'colors');
+      }
+
+      // Process sizes
+      if (sizes.length > 0) {
+        await createAttributes(SizeV2, sizes, 'sizes');
+      }
+
+      // Process materials
+      if (materials.length > 0) {
+        await createAttributes(MaterialV2, materials, 'materials');
+      }
+
+      // Process genders
+      if (genders.length > 0) {
+        await createAttributes(GenderV2, genders, 'genders');
+      }
+
+      // Process seasons
+      if (seasons.length > 0) {
+        await createAttributes(SeasonV2, seasons, 'seasons');
+      }
+
+      // Process styles
+      if (styles.length > 0) {
+        await createAttributes(StyleV2, styles, 'styles');
+      }
+
+      // Process patterns
+      if (patterns.length > 0) {
+        await createAttributes(PatternV2, patterns, 'patterns');
+      }
+
+      // Process shoe heights
+      if (shoeHeights.length > 0) {
+        await createAttributes(ShoeHeightV2, shoeHeights, 'shoeHeights');
+      }
+
+      // Process fits
+      if (fits.length > 0) {
+        await createAttributes(FitV2, fits, 'fits');
+      }
+
+      // Process occasions
+      if (occasions.length > 0) {
+        await createAttributes(OccasionV2, occasions, 'occasions');
+      }
+
+      // Process collar types
+      if (collarTypes.length > 0) {
+        await createAttributes(CollarTypeV2, collarTypes, 'collarTypes');
+      }
+
+      // Calculate totals
+      const totalCreated = Object.values(results).reduce((sum, result) => sum + result.created, 0);
+      const totalSkipped = Object.values(results).reduce((sum, result) => sum + result.skipped, 0);
+      const totalErrors = Object.values(results).reduce((sum, result) => sum + result.errors.length, 0);
+
+      res.status(200).json({
+        success: true,
+        message: 'Attribute initialization completed',
+        summary: {
+          totalCreated,
+          totalSkipped,
+          totalErrors
+        },
+        details: results
+      });
+
+    } catch (err) {
+      console.error('Error in initializeAttributes:', err);
+      res.status(500).json({ 
+        success: false, 
+        error: err.message,
+        message: 'Failed to initialize attributes',
+        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+      });
     }
   },
 };

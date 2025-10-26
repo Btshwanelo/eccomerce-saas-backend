@@ -54,6 +54,7 @@ const corsOptions = {
       "http://localhost:3005", // Development
       "http://109.199.122.35:3000",
       "http://109.199.122.35:3002", // External frontend access
+      "http://109.199.122.35:5000", // Additional frontend port
     ];
 
     // Allow requests with no origin (like mobile apps or curl requests)

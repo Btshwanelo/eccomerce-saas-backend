@@ -150,5 +150,8 @@ router.delete("/collar-types/:id", protect, adminOnly, attributeController.delet
 // Get all attributes for a category
 router.get("/category/:categoryId/all", attributeController.getAttributesForCategory);
 
+// Initialize all attributes from JSON data (admin only)
+router.post("/initialize", protect, adminOnly, attributeController.initializeAttributes);
+
 module.exports = router;
 

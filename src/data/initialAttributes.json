@@ -1,0 +1,1842 @@
+{
+  "categories": [
+    {
+      "name": "Men",
+      "slug": "men",
+      "description": "Men's fashion and footwear",
+      "parentCategory": null,
+      "level": 0,
+      "path": "/men",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Men's Clothing",
+      "slug": "mens-clothing",
+      "description": "All men's clothing items",
+      "parentCategory": null,
+      "level": 1,
+      "path": "/men/clothing",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Men's Shoes",
+      "slug": "mens-shoes",
+      "description": "Men's footwear collection",
+      "parentCategory": null,
+      "level": 1,
+      "path": "/men/shoes",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "T-Shirts",
+      "slug": "t-shirts",
+      "description": "Men's t-shirts and casual tops",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/clothing/t-shirts",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Shirts",
+      "slug": "shirts",
+      "description": "Men's formal and casual shirts",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/clothing/shirts",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Pants",
+      "slug": "pants",
+      "description": "Men's pants and trousers",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/clothing/pants",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Jeans",
+      "slug": "jeans",
+      "description": "Men's denim jeans",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/clothing/jeans",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Shorts",
+      "slug": "shorts",
+      "description": "Men's shorts",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/clothing/shorts",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "name": "Jackets",
+      "slug": "jackets",
+      "description": "Men's jackets and outerwear",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/clothing/jackets",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "name": "Sweaters",
+      "slug": "sweaters",
+      "description": "Men's sweaters and knitwear",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/clothing/sweaters",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "name": "Sneakers",
+      "slug": "sneakers",
+      "description": "Men's casual sneakers",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/shoes/sneakers",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Formal Shoes",
+      "slug": "formal-shoes",
+      "description": "Men's dress and formal shoes",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/shoes/formal-shoes",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Boots",
+      "slug": "boots",
+      "description": "Men's boots",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/shoes/boots",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Sandals",
+      "slug": "sandals",
+      "description": "Men's sandals and flip-flops",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/men/shoes/sandals",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Women",
+      "slug": "women",
+      "description": "Women's fashion and footwear",
+      "parentCategory": null,
+      "level": 0,
+      "path": "/women",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Women's Clothing",
+      "slug": "womens-clothing",
+      "description": "All women's clothing items",
+      "parentCategory": null,
+      "level": 1,
+      "path": "/women/clothing",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Women's Shoes",
+      "slug": "womens-shoes",
+      "description": "Women's footwear collection",
+      "parentCategory": null,
+      "level": 1,
+      "path": "/women/shoes",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Dresses",
+      "slug": "dresses",
+      "description": "Women's dresses",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/women/clothing/dresses",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Tops",
+      "slug": "tops",
+      "description": "Women's tops and blouses",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/women/clothing/tops",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Skirts",
+      "slug": "skirts",
+      "description": "Women's skirts",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/women/clothing/skirts",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Women's Pants",
+      "slug": "womens-pants",
+      "description": "Women's pants and trousers",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/women/clothing/pants",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Women's Jeans",
+      "slug": "womens-jeans",
+      "description": "Women's denim jeans",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/women/clothing/jeans",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "name": "Heels",
+      "slug": "heels",
+      "description": "Women's heels and pumps",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/women/shoes/heels",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Flats",
+      "slug": "flats",
+      "description": "Women's flat shoes",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/women/shoes/flats",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Women's Sneakers",
+      "slug": "womens-sneakers",
+      "description": "Women's sneakers",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/women/shoes/sneakers",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Women's Boots",
+      "slug": "womens-boots",
+      "description": "Women's boots",
+      "parentCategory": null,
+      "level": 2,
+      "path": "/women/shoes/boots",
+      "isActive": true,
+      "sortOrder": 4
+    }
+  ],
+  "brands": [
+    {
+      "name": "Nike",
+      "slug": "nike",
+      "description": "Just Do It - Athletic footwear and apparel",
+      "countryOrigin": "United States",
+      "isActive": true
+    },
+    {
+      "name": "Adidas",
+      "slug": "adidas",
+      "description": "Impossible is Nothing - Sports and lifestyle brand",
+      "countryOrigin": "Germany",
+      "isActive": true
+    },
+    {
+      "name": "Puma",
+      "slug": "puma",
+      "description": "Forever Faster - Athletic and casual wear",
+      "countryOrigin": "Germany",
+      "isActive": true
+    },
+    {
+      "name": "Levi's",
+      "slug": "levis",
+      "description": "Original denim and casual wear since 1853",
+      "countryOrigin": "United States",
+      "isActive": true
+    },
+    {
+      "name": "Zara",
+      "slug": "zara",
+      "description": "Fast fashion and contemporary clothing",
+      "countryOrigin": "Spain",
+      "isActive": true
+    },
+    {
+      "name": "H&M",
+      "slug": "hm",
+      "description": "Fashion and quality at the best price",
+      "countryOrigin": "Sweden",
+      "isActive": true
+    },
+    {
+      "name": "Converse",
+      "slug": "converse",
+      "description": "Classic canvas shoes and streetwear",
+      "countryOrigin": "United States",
+      "isActive": true
+    },
+    {
+      "name": "Vans",
+      "slug": "vans",
+      "description": "Off The Wall - Skateboarding shoes and apparel",
+      "countryOrigin": "United States",
+      "isActive": true
+    },
+    {
+      "name": "Tommy Hilfiger",
+      "slug": "tommy-hilfiger",
+      "description": "Classic American cool style",
+      "countryOrigin": "United States",
+      "isActive": true
+    },
+    {
+      "name": "Calvin Klein",
+      "slug": "calvin-klein",
+      "description": "Modern, minimalist fashion",
+      "countryOrigin": "United States",
+      "isActive": true
+    },
+    {
+      "name": "Ralph Lauren",
+      "slug": "ralph-lauren",
+      "description": "American luxury fashion",
+      "countryOrigin": "United States",
+      "isActive": true
+    },
+    {
+      "name": "Gucci",
+      "slug": "gucci",
+      "description": "Italian luxury fashion brand",
+      "countryOrigin": "Italy",
+      "isActive": true
+    },
+    {
+      "name": "New Balance",
+      "slug": "new-balance",
+      "description": "Athletic footwear and activewear",
+      "countryOrigin": "United States",
+      "isActive": true
+    },
+    {
+      "name": "Reebok",
+      "slug": "reebok",
+      "description": "Fitness and lifestyle brand",
+      "countryOrigin": "United Kingdom",
+      "isActive": true
+    },
+    {
+      "name": "Timberland",
+      "slug": "timberland",
+      "description": "Outdoor footwear and apparel",
+      "countryOrigin": "United States",
+      "isActive": true
+    }
+  ],
+  "colors": [
+    {
+      "name": "Black",
+      "slug": "black",
+      "hexCode": "#000000",
+      "rgbCode": "rgb(0, 0, 0)",
+      "description": "Classic black color",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "White",
+      "slug": "white",
+      "hexCode": "#FFFFFF",
+      "rgbCode": "rgb(255, 255, 255)",
+      "description": "Pure white color",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Gray",
+      "slug": "gray",
+      "hexCode": "#808080",
+      "rgbCode": "rgb(128, 128, 128)",
+      "description": "Neutral gray color",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Navy Blue",
+      "slug": "navy-blue",
+      "hexCode": "#000080",
+      "rgbCode": "rgb(0, 0, 128)",
+      "description": "Deep navy blue",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Blue",
+      "slug": "blue",
+      "hexCode": "#0000FF",
+      "rgbCode": "rgb(0, 0, 255)",
+      "description": "Classic blue color",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "name": "Light Blue",
+      "slug": "light-blue",
+      "hexCode": "#ADD8E6",
+      "rgbCode": "rgb(173, 216, 230)",
+      "description": "Soft light blue",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "name": "Red",
+      "slug": "red",
+      "hexCode": "#FF0000",
+      "rgbCode": "rgb(255, 0, 0)",
+      "description": "Vibrant red color",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "name": "Burgundy",
+      "slug": "burgundy",
+      "hexCode": "#800020",
+      "rgbCode": "rgb(128, 0, 32)",
+      "description": "Deep burgundy wine color",
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "name": "Pink",
+      "slug": "pink",
+      "hexCode": "#FFC0CB",
+      "rgbCode": "rgb(255, 192, 203)",
+      "description": "Soft pink color",
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "name": "Green",
+      "slug": "green",
+      "hexCode": "#008000",
+      "rgbCode": "rgb(0, 128, 0)",
+      "description": "Fresh green color",
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "name": "Olive",
+      "slug": "olive",
+      "hexCode": "#808000",
+      "rgbCode": "rgb(128, 128, 0)",
+      "description": "Military olive green",
+      "isActive": true,
+      "sortOrder": 11
+    },
+    {
+      "name": "Yellow",
+      "slug": "yellow",
+      "hexCode": "#FFFF00",
+      "rgbCode": "rgb(255, 255, 0)",
+      "description": "Bright yellow color",
+      "isActive": true,
+      "sortOrder": 12
+    },
+    {
+      "name": "Orange",
+      "slug": "orange",
+      "hexCode": "#FFA500",
+      "rgbCode": "rgb(255, 165, 0)",
+      "description": "Vibrant orange color",
+      "isActive": true,
+      "sortOrder": 13
+    },
+    {
+      "name": "Brown",
+      "slug": "brown",
+      "hexCode": "#A52A2A",
+      "rgbCode": "rgb(165, 42, 42)",
+      "description": "Rich brown color",
+      "isActive": true,
+      "sortOrder": 14
+    },
+    {
+      "name": "Tan",
+      "slug": "tan",
+      "hexCode": "#D2B48C",
+      "rgbCode": "rgb(210, 180, 140)",
+      "description": "Light tan beige",
+      "isActive": true,
+      "sortOrder": 15
+    },
+    {
+      "name": "Beige",
+      "slug": "beige",
+      "hexCode": "#F5F5DC",
+      "rgbCode": "rgb(245, 245, 220)",
+      "description": "Neutral beige color",
+      "isActive": true,
+      "sortOrder": 16
+    },
+    {
+      "name": "Purple",
+      "slug": "purple",
+      "hexCode": "#800080",
+      "rgbCode": "rgb(128, 0, 128)",
+      "description": "Royal purple color",
+      "isActive": true,
+      "sortOrder": 17
+    },
+    {
+      "name": "Multicolor",
+      "slug": "multicolor",
+      "hexCode": "#FFFFFF",
+      "rgbCode": "rgb(255, 255, 255)",
+      "description": "Multiple colors",
+      "isActive": true,
+      "sortOrder": 18
+    }
+  ],
+  "sizes": [
+    {
+      "name": "XS",
+      "slug": "xs",
+      "category": "clothing",
+      "numericValue": 1,
+      "measurements": {
+        "chest": 86,
+        "waist": 71,
+        "hip": 91,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "S",
+      "slug": "s",
+      "category": "clothing",
+      "numericValue": 2,
+      "measurements": {
+        "chest": 91,
+        "waist": 76,
+        "hip": 96,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "M",
+      "slug": "m",
+      "category": "clothing",
+      "numericValue": 3,
+      "measurements": {
+        "chest": 96,
+        "waist": 81,
+        "hip": 101,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "L",
+      "slug": "l",
+      "category": "clothing",
+      "numericValue": 4,
+      "measurements": {
+        "chest": 101,
+        "waist": 86,
+        "hip": 106,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "XL",
+      "slug": "xl",
+      "category": "clothing",
+      "numericValue": 5,
+      "measurements": {
+        "chest": 106,
+        "waist": 91,
+        "hip": 111,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "name": "XXL",
+      "slug": "xxl",
+      "category": "clothing",
+      "numericValue": 6,
+      "measurements": {
+        "chest": 111,
+        "waist": 96,
+        "hip": 116,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "name": "3XL",
+      "slug": "3xl",
+      "category": "clothing",
+      "numericValue": 7,
+      "measurements": {
+        "chest": 116,
+        "waist": 101,
+        "hip": 121,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "name": "US 6",
+      "slug": "us-6",
+      "category": "shoes",
+      "numericValue": 6,
+      "measurements": {
+        "length": 24,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "name": "US 6.5",
+      "slug": "us-6-5",
+      "category": "shoes",
+      "numericValue": 6.5,
+      "measurements": {
+        "length": 24.5,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 11
+    },
+    {
+      "name": "US 7",
+      "slug": "us-7",
+      "category": "shoes",
+      "numericValue": 7,
+      "measurements": {
+        "length": 25,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 12
+    },
+    {
+      "name": "US 7.5",
+      "slug": "us-7-5",
+      "category": "shoes",
+      "numericValue": 7.5,
+      "measurements": {
+        "length": 25.5,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 13
+    },
+    {
+      "name": "US 8",
+      "slug": "us-8",
+      "category": "shoes",
+      "numericValue": 8,
+      "measurements": {
+        "length": 26,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 14
+    },
+    {
+      "name": "US 8.5",
+      "slug": "us-8-5",
+      "category": "shoes",
+      "numericValue": 8.5,
+      "measurements": {
+        "length": 26.5,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 15
+    },
+    {
+      "name": "US 9",
+      "slug": "us-9",
+      "category": "shoes",
+      "numericValue": 9,
+      "measurements": {
+        "length": 27,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 16
+    },
+    {
+      "name": "US 9.5",
+      "slug": "us-9-5",
+      "category": "shoes",
+      "numericValue": 9.5,
+      "measurements": {
+        "length": 27.5,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 17
+    },
+    {
+      "name": "US 10",
+      "slug": "us-10",
+      "category": "shoes",
+      "numericValue": 10,
+      "measurements": {
+        "length": 28,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 18
+    },
+    {
+      "name": "US 10.5",
+      "slug": "us-10-5",
+      "category": "shoes",
+      "numericValue": 10.5,
+      "measurements": {
+        "length": 28.5,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 19
+    },
+    {
+      "name": "US 11",
+      "slug": "us-11",
+      "category": "shoes",
+      "numericValue": 11,
+      "measurements": {
+        "length": 29,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 20
+    },
+    {
+      "name": "US 11.5",
+      "slug": "us-11-5",
+      "category": "shoes",
+      "numericValue": 11.5,
+      "measurements": {
+        "length": 29.5,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 21
+    },
+    {
+      "name": "US 12",
+      "slug": "us-12",
+      "category": "shoes",
+      "numericValue": 12,
+      "measurements": {
+        "length": 30,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 22
+    },
+    {
+      "name": "US 13",
+      "slug": "us-13",
+      "category": "shoes",
+      "numericValue": 13,
+      "measurements": {
+        "length": 31,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 23
+    },
+    {
+      "name": "US 14",
+      "slug": "us-14",
+      "category": "shoes",
+      "numericValue": 14,
+      "measurements": {
+        "length": 32,
+        "unit": "cm"
+      },
+      "isActive": true,
+      "sortOrder": 24
+    },
+    {
+      "name": "One Size",
+      "slug": "one-size",
+      "category": "accessories",
+      "isActive": true,
+      "sortOrder": 30
+    }
+  ],
+  "materials": [
+    {
+      "name": "Cotton",
+      "slug": "cotton",
+      "description": "Natural, breathable fabric",
+      "composition": [
+        {
+          "material": "Cotton",
+          "percentage": 100
+        }
+      ],
+      "careInstructions": [
+        "Machine wash cold",
+        "Tumble dry low",
+        "Iron on medium heat"
+      ],
+      "properties": {
+        "waterproof": false,
+        "breathable": true,
+        "stretchable": false,
+        "hypoallergenic": true
+      },
+      "isActive": true
+    },
+    {
+      "name": "Polyester",
+      "slug": "polyester",
+      "description": "Durable synthetic fabric",
+      "composition": [
+        {
+          "material": "Polyester",
+          "percentage": 100
+        }
+      ],
+      "careInstructions": [
+        "Machine wash warm",
+        "Tumble dry low",
+        "Do not iron"
+      ],
+      "properties": {
+        "waterproof": false,
+        "breathable": false,
+        "stretchable": false,
+        "hypoallergenic": false
+      },
+      "isActive": true
+    },
+    {
+      "name": "Cotton Blend",
+      "slug": "cotton-blend",
+      "description": "Comfortable cotton polyester mix",
+      "composition": [
+        {
+          "material": "Cotton",
+          "percentage": 60
+        },
+        {
+          "material": "Polyester",
+          "percentage": 40
+        }
+      ],
+      "careInstructions": [
+        "Machine wash cold",
+        "Tumble dry low",
+        "Iron on low heat"
+      ],
+      "properties": {
+        "waterproof": false,
+        "breathable": true,
+        "stretchable": false,
+        "hypoallergenic": false
+      },
+      "isActive": true
+    },
+    {
+      "name": "Denim",
+      "slug": "denim",
+      "description": "Sturdy cotton twill fabric",
+      "composition": [
+        {
+          "material": "Cotton",
+          "percentage": 98
+        },
+        {
+          "material": "Elastane",
+          "percentage": 2
+        }
+      ],
+      "careInstructions": [
+        "Machine wash cold inside out",
+        "Hang to dry",
+        "Iron on high heat if needed"
+      ],
+      "properties": {
+        "waterproof": false,
+        "breathable": true,
+        "stretchable": true,
+        "hypoallergenic": false
+      },
+      "isActive": true
+    },
+    {
+      "name": "Leather",
+      "slug": "leather",
+      "description": "Premium genuine leather",
+      "composition": [
+        {
+          "material": "Leather",
+          "percentage": 100
+        }
+      ],
+      "careInstructions": [
+        "Wipe with damp cloth",
+        "Apply leather conditioner",
+        "Keep away from heat"
+      ],
+      "properties": {
+        "waterproof": false,
+        "breathable": true,
+        "stretchable": false,
+        "hypoallergenic": false
+      },
+      "isActive": true
+    },
+    {
+      "name": "Synthetic Leather",
+      "slug": "synthetic-leather",
+      "description": "Vegan leather alternative",
+      "composition": [
+        {
+          "material": "Polyurethane",
+          "percentage": 100
+        }
+      ],
+      "careInstructions": [
+        "Wipe with damp cloth",
+        "Do not use harsh chemicals",
+        "Air dry"
+      ],
+      "properties": {
+        "waterproof": true,
+        "breathable": false,
+        "stretchable": false,
+        "hypoallergenic": true
+      },
+      "isActive": true
+    },
+    {
+      "name": "Wool",
+      "slug": "wool",
+      "description": "Natural warm fabric",
+      "composition": [
+        {
+          "material": "Wool",
+          "percentage": 100
+        }
+      ],
+      "careInstructions": [
+        "Dry clean only",
+        "Hand wash cold if needed",
+        "Lay flat to dry"
+      ],
+      "properties": {
+        "waterproof": false,
+        "breathable": true,
+        "stretchable": false,
+        "hypoallergenic": false
+      },
+      "isActive": true
+    },
+    {
+      "name": "Nylon",
+      "slug": "nylon",
+      "description": "Lightweight synthetic material",
+      "composition": [
+        {
+          "material": "Nylon",
+          "percentage": 100
+        }
+      ],
+      "careInstructions": [
+        "Machine wash cold",
+        "Hang to dry",
+        "Do not iron"
+      ],
+      "properties": {
+        "waterproof": true,
+        "breathable": false,
+        "stretchable": true,
+        "hypoallergenic": false
+      },
+      "isActive": true
+    },
+    {
+      "name": "Spandex Blend",
+      "slug": "spandex-blend",
+      "description": "Stretchy athletic fabric",
+      "composition": [
+        {
+          "material": "Polyester",
+          "percentage": 90
+        },
+        {
+          "material": "Spandex",
+          "percentage": 10
+        }
+      ],
+      "careInstructions": [
+        "Machine wash cold",
+        "Do not bleach",
+        "Tumble dry low"
+      ],
+      "properties": {
+        "waterproof": false,
+        "breathable": true,
+        "stretchable": true,
+        "hypoallergenic": false
+      },
+      "isActive": true
+    },
+    {
+      "name": "Canvas",
+      "slug": "canvas",
+      "description": "Heavy duty cotton fabric",
+      "composition": [
+        {
+          "material": "Cotton",
+          "percentage": 100
+        }
+      ],
+      "careInstructions": [
+        "Spot clean",
+        "Machine wash cold if needed",
+        "Air dry"
+      ],
+      "properties": {
+        "waterproof": false,
+        "breathable": true,
+        "stretchable": false,
+        "hypoallergenic": true
+      },
+      "isActive": true
+    },
+    {
+      "name": "Mesh",
+      "slug": "mesh",
+      "description": "Breathable athletic material",
+      "composition": [
+        {
+          "material": "Polyester",
+          "percentage": 100
+        }
+      ],
+      "careInstructions": [
+        "Machine wash cold",
+        "Air dry",
+        "Do not iron"
+      ],
+      "properties": {
+        "waterproof": false,
+        "breathable": true,
+        "stretchable": true,
+        "hypoallergenic": false
+      },
+      "isActive": true
+    },
+    {
+      "name": "Suede",
+      "slug": "suede",
+      "description": "Soft textured leather",
+      "composition": [
+        {
+          "material": "Suede",
+          "percentage": 100
+        }
+      ],
+      "careInstructions": [
+        "Brush with suede brush",
+        "Use suede cleaner",
+        "Avoid water"
+      ],
+      "properties": {
+        "waterproof": false,
+        "breathable": true,
+        "stretchable": false,
+        "hypoallergenic": false
+      },
+      "isActive": true
+    }
+  ],
+  "genders": [
+    {
+      "name": "Men",
+      "slug": "men",
+      "description": "Products designed for men",
+      "targetAge": {
+        "min": 18,
+        "max": 100
+      },
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Women",
+      "slug": "women",
+      "description": "Products designed for women",
+      "targetAge": {
+        "min": 18,
+        "max": 100
+      },
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Unisex",
+      "slug": "unisex",
+      "description": "Products suitable for all genders",
+      "targetAge": {
+        "min": 18,
+        "max": 100
+      },
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Boys",
+      "slug": "boys",
+      "description": "Products for young boys",
+      "targetAge": {
+        "min": 2,
+        "max": 17
+      },
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Girls",
+      "slug": "girls",
+      "description": "Products for young girls",
+      "targetAge": {
+        "min": 2,
+        "max": 17
+      },
+      "isActive": true,
+      "sortOrder": 5
+    }
+  ],
+  "seasons": [
+    {
+      "name": "Spring",
+      "slug": "spring",
+      "description": "Light layers for mild weather",
+      "months": [9, 10, 11],
+      "temperatureRange": {
+        "min": 15,
+        "max": 25,
+        "unit": "celsius"
+      },
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Summer",
+      "slug": "summer",
+      "description": "Lightweight clothing for hot weather",
+      "months": [12, 1, 2],
+      "temperatureRange": {
+        "min": 25,
+        "max": 40,
+        "unit": "celsius"
+      },
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Fall",
+      "slug": "fall",
+      "description": "Transitional pieces for cooling weather",
+      "months": [3, 4, 5],
+      "temperatureRange": {
+        "min": 10,
+        "max": 20,
+        "unit": "celsius"
+      },
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Winter",
+      "slug": "winter",
+      "description": "Warm layers for cold weather",
+      "months": [6, 7, 8],
+      "temperatureRange": {
+        "min": 0,
+        "max": 15,
+        "unit": "celsius"
+      },
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "All Season",
+      "slug": "all-season",
+      "description": "Versatile items for year-round wear",
+      "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "temperatureRange": {
+        "min": 0,
+        "max": 40,
+        "unit": "celsius"
+      },
+      "isActive": true,
+      "sortOrder": 5
+    }
+  ],
+  "styles": [
+    {
+      "name": "Casual",
+      "slug": "casual",
+      "description": "Relaxed and comfortable everyday wear",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Formal",
+      "slug": "formal",
+      "description": "Professional and dressy attire",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Business Casual",
+      "slug": "business-casual",
+      "description": "Smart casual for office environments",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Athletic",
+      "slug": "athletic",
+      "description": "Performance wear for sports and fitness",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Streetwear",
+      "slug": "streetwear",
+      "description": "Urban contemporary fashion",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "name": "Vintage",
+      "slug": "vintage",
+      "description": "Retro and classic inspired styles",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "name": "Bohemian",
+      "slug": "bohemian",
+      "description": "Free-spirited and artistic style",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "name": "Minimalist",
+      "slug": "minimalist",
+      "description": "Simple and clean aesthetic",
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "name": "Preppy",
+      "slug": "preppy",
+      "description": "Classic collegiate style",
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "name": "Elegant",
+      "slug": "elegant",
+      "description": "Sophisticated and refined fashion",
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "name": "Sporty",
+      "slug": "sporty",
+      "description": "Athletic-inspired casual wear",
+      "isActive": true,
+      "sortOrder": 11
+    },
+    {
+      "name": "Edgy",
+      "slug": "edgy",
+      "description": "Bold and alternative fashion",
+      "isActive": true,
+      "sortOrder": 12
+    }
+  ],
+  "patterns": [
+    {
+      "name": "Solid",
+      "slug": "solid",
+      "description": "Single solid color without pattern",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Striped",
+      "slug": "striped",
+      "description": "Horizontal or vertical stripes",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Checkered",
+      "slug": "checkered",
+      "description": "Square check pattern",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Plaid",
+      "slug": "plaid",
+      "description": "Tartan or plaid pattern",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Polka Dot",
+      "slug": "polka-dot",
+      "description": "Circular dot pattern",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "name": "Floral",
+      "slug": "floral",
+      "description": "Flower and botanical prints",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "name": "Geometric",
+      "slug": "geometric",
+      "description": "Abstract geometric shapes",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "name": "Animal Print",
+      "slug": "animal-print",
+      "description": "Leopard, zebra, or other animal patterns",
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "name": "Camouflage",
+      "slug": "camouflage",
+      "description": "Military camo pattern",
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "name": "Paisley",
+      "slug": "paisley",
+      "description": "Traditional paisley design",
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "name": "Tie-Dye",
+      "slug": "tie-dye",
+      "description": "Colorful spiral dye pattern",
+      "isActive": true,
+      "sortOrder": 11
+    },
+    {
+      "name": "Abstract",
+      "slug": "abstract",
+      "description": "Non-representational artistic patterns",
+      "isActive": true,
+      "sortOrder": 12
+    },
+    {
+      "name": "Printed",
+      "slug": "printed",
+      "description": "Various printed graphics and designs",
+      "isActive": true,
+      "sortOrder": 13
+    }
+  ],
+  "shoeHeights": [
+    {
+      "name": "Low Top",
+      "slug": "low-top",
+      "description": "Below ankle height",
+      "heightRange": {
+        "min": 0,
+        "max": 5
+      },
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Mid Top",
+      "slug": "mid-top",
+      "description": "Ankle height",
+      "heightRange": {
+        "min": 5,
+        "max": 10
+      },
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "High Top",
+      "slug": "high-top",
+      "description": "Above ankle height",
+      "heightRange": {
+        "min": 10,
+        "max": 15
+      },
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Ankle Boot",
+      "slug": "ankle-boot",
+      "description": "Covers the ankle",
+      "heightRange": {
+        "min": 10,
+        "max": 15
+      },
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Mid Calf",
+      "slug": "mid-calf",
+      "description": "Reaches mid-calf",
+      "heightRange": {
+        "min": 15,
+        "max": 25
+      },
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "name": "Knee High",
+      "slug": "knee-high",
+      "description": "Reaches the knee",
+      "heightRange": {
+        "min": 25,
+        "max": 40
+      },
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "name": "Over the Knee",
+      "slug": "over-the-knee",
+      "description": "Extends above the knee",
+      "heightRange": {
+        "min": 40,
+        "max": 60
+      },
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "name": "Flat",
+      "slug": "flat",
+      "description": "No heel elevation",
+      "heightRange": {
+        "min": 0,
+        "max": 1
+      },
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "name": "Low Heel",
+      "slug": "low-heel",
+      "description": "1-2 inch heel",
+      "heightRange": {
+        "min": 2.5,
+        "max": 5
+      },
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "name": "Mid Heel",
+      "slug": "mid-heel",
+      "description": "2-3 inch heel",
+      "heightRange": {
+        "min": 5,
+        "max": 7.5
+      },
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "name": "High Heel",
+      "slug": "high-heel",
+      "description": "3-4 inch heel",
+      "heightRange": {
+        "min": 7.5,
+        "max": 10
+      },
+      "isActive": true,
+      "sortOrder": 11
+    },
+    {
+      "name": "Platform",
+      "slug": "platform",
+      "description": "Thick sole throughout",
+      "heightRange": {
+        "min": 5,
+        "max": 15
+      },
+      "isActive": true,
+      "sortOrder": 12
+    }
+  ],
+  "fits": [
+    {
+      "name": "Slim Fit",
+      "slug": "slim-fit",
+      "description": "Close to body, tailored fit",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Regular Fit",
+      "slug": "regular-fit",
+      "description": "Standard comfortable fit",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Relaxed Fit",
+      "slug": "relaxed-fit",
+      "description": "Loose and comfortable",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Oversized",
+      "slug": "oversized",
+      "description": "Deliberately large fit",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Athletic Fit",
+      "slug": "athletic-fit",
+      "description": "Fitted for athletic build",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "name": "Tailored",
+      "slug": "tailored",
+      "description": "Custom fitted appearance",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "name": "Skinny",
+      "slug": "skinny",
+      "description": "Very tight and form-fitting",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "name": "Straight",
+      "slug": "straight",
+      "description": "Uniform width from top to bottom",
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "name": "Bootcut",
+      "slug": "bootcut",
+      "description": "Slightly flared at bottom",
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "name": "Wide Leg",
+      "slug": "wide-leg",
+      "description": "Extra room throughout leg",
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "name": "Compression",
+      "slug": "compression",
+      "description": "Tight athletic fit with stretch",
+      "isActive": true,
+      "sortOrder": 11
+    }
+  ],
+  "occasions": [
+    {
+      "name": "Everyday",
+      "slug": "everyday",
+      "description": "Daily casual wear",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "Work",
+      "slug": "work",
+      "description": "Professional office wear",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Party",
+      "slug": "party",
+      "description": "Social gatherings and celebrations",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Wedding",
+      "slug": "wedding",
+      "description": "Formal wedding attire",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Gym",
+      "slug": "gym",
+      "description": "Workout and fitness activities",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "name": "Running",
+      "slug": "running",
+      "description": "Running and jogging",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "name": "Beach",
+      "slug": "beach",
+      "description": "Beach and pool activities",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "name": "Date Night",
+      "slug": "date-night",
+      "description": "Romantic evenings out",
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "name": "Business Meeting",
+      "slug": "business-meeting",
+      "description": "Professional meetings",
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "name": "Outdoor",
+      "slug": "outdoor",
+      "description": "Outdoor activities and adventures",
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "name": "Travel",
+      "slug": "travel",
+      "description": "Comfortable travel wear",
+      "isActive": true,
+      "sortOrder": 11
+    },
+    {
+      "name": "Lounge",
+      "slug": "lounge",
+      "description": "Relaxing at home",
+      "isActive": true,
+      "sortOrder": 12
+    },
+    {
+      "name": "Concert",
+      "slug": "concert",
+      "description": "Music events and festivals",
+      "isActive": true,
+      "sortOrder": 13
+    },
+    {
+      "name": "Graduation",
+      "slug": "graduation",
+      "description": "Graduation ceremonies",
+      "isActive": true,
+      "sortOrder": 14
+    }
+  ],
+  "collarTypes": [
+    {
+      "name": "Crew Neck",
+      "slug": "crew-neck",
+      "description": "Round neckline close to neck",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "name": "V-Neck",
+      "slug": "v-neck",
+      "description": "V-shaped neckline",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "name": "Polo Collar",
+      "slug": "polo-collar",
+      "description": "Collared shirt with button placket",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "name": "Button Down",
+      "slug": "button-down",
+      "description": "Collar with button fastening",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "name": "Spread Collar",
+      "slug": "spread-collar",
+      "description": "Wide collar points",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "name": "Point Collar",
+      "slug": "point-collar",
+      "description": "Classic collar with narrow points",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "name": "Mandarin Collar",
+      "slug": "mandarin-collar",
+      "description": "Short stand-up collar",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "name": "Turtleneck",
+      "slug": "turtleneck",
+      "description": "High rolled collar",
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "name": "Mock Neck",
+      "slug": "mock-neck",
+      "description": "Short stand-up collar without fold",
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "name": "Henley",
+      "slug": "henley",
+      "description": "Collarless with button placket",
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "name": "Scoop Neck",
+      "slug": "scoop-neck",
+      "description": "Deep rounded neckline",
+      "isActive": true,
+      "sortOrder": 11
+    },
+    {
+      "name": "Square Neck",
+      "slug": "square-neck",
+      "description": "Square-shaped neckline",
+      "isActive": true,
+      "sortOrder": 12
+    },
+    {
+      "name": "Boat Neck",
+      "slug": "boat-neck",
+      "description": "Wide horizontal neckline",
+      "isActive": true,
+      "sortOrder": 13
+    },
+    {
+      "name": "Off Shoulder",
+      "slug": "off-shoulder",
+      "description": "Exposes shoulders",
+      "isActive": true,
+      "sortOrder": 14
+    },
+    {
+      "name": "Halter",
+      "slug": "halter",
+      "description": "Ties or fastens behind neck",
+      "isActive": true,
+      "sortOrder": 15
+    },
+    {
+      "name": "Collarless",
+      "slug": "collarless",
+      "description": "No collar design",
+      "isActive": true,
+      "sortOrder": 16
+    }
+  ]
+}
