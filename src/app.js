@@ -24,6 +24,16 @@ const v2OrderRoutes = require("./routes/v2/order.routes");
 const v2AddressRoutes = require("./routes/v2/address.routes");
 const v2DeliveryRoutes = require("./routes/v2/delivery.routes");
 
+// V3 Routes
+const v3ProductRoutes = require("./routes/v3/product.routes");
+const v3CategoryRoutes = require("./routes/v3/category.routes");
+const v3BrandRoutes = require("./routes/v3/brand.routes");
+const v3UserRoutes = require("./routes/v3/user.routes");
+const v3CartRoutes = require("./routes/v3/cart.routes");
+const v3OrderRoutes = require("./routes/v3/order.routes");
+const v3AddressRoutes = require("./routes/v3/address.routes");
+const v3DeliveryRoutes = require("./routes/v3/delivery.routes");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -136,5 +146,15 @@ app.use("/api/v2/cart", v2CartRoutes);
 app.use("/api/v2/orders", v2OrderRoutes);
 app.use("/api/v2/addresses", v2AddressRoutes);
 app.use("/api/v2/delivery", v2DeliveryRoutes);
+
+//V3 APIs
+app.use("/api/v3/products", v3ProductRoutes);
+app.use("/api/v3/categories", v3CategoryRoutes);
+app.use("/api/v3/brands", v3BrandRoutes);
+app.use("/api/v3/users", v3UserRoutes);
+app.use("/api/v3/cart", v3CartRoutes);
+app.use("/api/v3/orders", v3OrderRoutes);
+app.use("/api/v3/addresses", v3AddressRoutes);
+app.use("/api/v3/delivery", v3DeliveryRoutes);
 
 module.exports = app;

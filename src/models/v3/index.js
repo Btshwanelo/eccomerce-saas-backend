@@ -32,7 +32,7 @@ const userSchema = new Schema(
     addresses: [
       {
         type: Schema.Types.ObjectId,
-        ref: "AddressV2",
+        ref: "AddressV3",
       },
     ],
     preferences: {
@@ -59,7 +59,7 @@ const userSchema = new Schema(
 const addressSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
-    ref: "UserV2",
+    ref: "UserV3",
     required: true,
     index: true,
   },
@@ -93,7 +93,7 @@ const categorySchema = new Schema(
     image: String,
     parentCategory: {
       type: Schema.Types.ObjectId,
-      ref: "CategoryV2",
+      ref: "CategoryV3",
       default: null,
       index: true,
     },
@@ -126,182 +126,6 @@ const brandSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-// Color Schema
-const colorSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  hexCode: { type: String, required: true },
-  rgbCode: String,
-  description: String,
-  isActive: { type: Boolean, default: true, index: true },
-  sortOrder: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// Size Schema
-const sizeSchema = new Schema({
-  name: { type: String, required: true, index: true },
-  slug: { type: String, required: true, index: true },
-  category: {
-    type: String,
-    enum: ["footwear", "apparel", "accessories", "homeware"],
-    required: true,
-    index: true,
-  },
-  numericValue: Number,
-  measurements: {
-    chest: Number,
-    waist: Number,
-    hip: Number,
-    length: Number,
-    unit: { type: String, default: "cm" },
-  },
-  isActive: { type: Boolean, default: true, index: true },
-  sortOrder: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// Material Schema
-const materialSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  description: String,
-  composition: [
-    {
-      material: String,
-      percentage: Number,
-    },
-  ],
-  careInstructions: [String],
-  properties: {
-    waterproof: { type: Boolean, default: false },
-    breathable: { type: Boolean, default: false },
-    stretchable: { type: Boolean, default: false },
-    hypoallergenic: { type: Boolean, default: false },
-  },
-  isActive: { type: Boolean, default: true, index: true },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// Gender Schema
-const genderSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  description: String,
-  targetAge: {
-    min: Number,
-    max: Number,
-  },
-  isActive: { type: Boolean, default: true, index: true },
-  sortOrder: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// Season Schema
-const seasonSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  description: String,
-  months: [{ type: Number, min: 1, max: 12 }],
-  temperatureRange: {
-    min: Number,
-    max: Number,
-    unit: { type: String, default: "celsius" },
-  },
-  isActive: { type: Boolean, default: true, index: true },
-  sortOrder: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// Style Schema
-const styleSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  description: String,
-  applicableCategories: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "CategoryV2",
-    },
-  ],
-  isActive: { type: Boolean, default: true, index: true },
-  sortOrder: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// Pattern Schema
-const patternSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  description: String,
-  patternImage: String,
-  isActive: { type: Boolean, default: true, index: true },
-  sortOrder: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// Shoe Height Schema
-const shoeHeightSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  description: String,
-  heightRange: {
-    min: Number,
-    max: Number,
-  },
-  applicableCategories: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "CategoryV2",
-    },
-  ],
-  isActive: { type: Boolean, default: true, index: true },
-  sortOrder: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// Fit Schema
-const fitSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  description: String,
-  applicableCategories: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "CategoryV2",
-    },
-  ],
-  isActive: { type: Boolean, default: true, index: true },
-  sortOrder: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// Occasion Schema
-const occasionSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  description: String,
-  isActive: { type: Boolean, default: true, index: true },
-  sortOrder: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
-// Collar Type Schema
-const collarTypeSchema = new Schema({
-  name: { type: String, required: true, unique: true, index: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  description: String,
-  applicableCategories: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "CategoryV2",
-    },
-  ],
-  isActive: { type: Boolean, default: true, index: true },
-  sortOrder: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now },
-});
-
 // ==================== PRODUCT SCHEMAS ====================
 
 // Product Schema
@@ -313,75 +137,32 @@ const productSchema = new Schema(
     shortDescription: String,
     sku: { type: String, required: true, unique: true, index: true },
 
+    sizes: [
+      {
+        name: String,
+        stockQuantity: Number,
+        stockStatus: {
+          type: String,
+          enum: ["in_stock", "out_of_stock", "backorder"],
+          default: "in_stock",
+        },
+      },
+    ],
     // Category and Brand
     categoryId: {
       type: Schema.Types.ObjectId,
-      ref: "CategoryV2",
+      ref: "CategoryV3",
       required: true,
       index: true,
     },
     brandId: {
       type: Schema.Types.ObjectId,
-      ref: "BrandV2",
+      ref: "BrandV3",
       index: true,
     },
 
     // Product Attributes
-    genderId: {
-      type: Schema.Types.ObjectId,
-      ref: "GenderV2",
-      index: true,
-    },
-    seasonId: {
-      type: Schema.Types.ObjectId,
-      ref: "SeasonV2",
-      index: true,
-    },
-    styleId: {
-      type: Schema.Types.ObjectId,
-      ref: "StyleV2",
-      index: true,
-    },
-    materialIds: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "MaterialV2",
-      },
-    ],
-    patternId: {
-      type: Schema.Types.ObjectId,
-      ref: "PatternV2",
-      index: true,
-    },
-    shoeHeightId: {
-      type: Schema.Types.ObjectId,
-      ref: "ShoeHeightV2",
-      index: true,
-    },
-    fitId: {
-      type: Schema.Types.ObjectId,
-      ref: "FitV2",
-      index: true,
-    },
-    occasionIds: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "OccasionV2",
-      },
-    ],
-    collarTypeId: {
-      type: Schema.Types.ObjectId,
-      ref: "CollarTypeV2",
-      index: true,
-    },
-
-    // Product Type
-    productType: {
-      type: String,
-      enum: ["simple", "variable", "grouped", "virtual", "downloadable"],
-      default: "simple",
-      index: true,
-    },
+    gender: { type: String, enum: ["male", "female", "unisex"] },
 
     // Pricing
     pricing: {
@@ -420,11 +201,6 @@ const productSchema = new Schema(
         url: { type: String, required: true },
         alt: String,
         isPrimary: { type: Boolean, default: false },
-        colorId: {
-          type: Schema.Types.ObjectId,
-          ref: "ColorV2",
-        },
-        sortOrder: { type: Number, default: 0 },
       },
     ],
 
@@ -456,7 +232,6 @@ const productSchema = new Schema(
       average: { type: Number, default: 0, index: true },
       count: { type: Number, default: 0 },
     },
-
     createdAt: { type: Date, default: Date.now, index: true },
     updatedAt: { type: Date, default: Date.now },
   },
@@ -465,64 +240,6 @@ const productSchema = new Schema(
   }
 );
 
-// Product Variant Schema
-const productVariantSchema = new Schema({
-  productId: {
-    type: Schema.Types.ObjectId,
-    ref: "ProductV2",
-    required: true,
-    index: true,
-  },
-  sku: { type: String, required: true, unique: true, index: true },
-
-  // Variant attributes
-  colorId: {
-    type: Schema.Types.ObjectId,
-    ref: "ColorV2",
-    index: true,
-  },
-  sizeId: {
-    type: Schema.Types.ObjectId,
-    ref: "SizeV2",
-    index: true,
-  },
-  genderId: {
-    type: Schema.Types.ObjectId,
-    ref: "GenderV2",
-    index: true,
-  },
-
-  // Variant-specific pricing
-  pricing: {
-    basePrice: Number,
-    salePrice: Number,
-    costPrice: Number,
-  },
-
-  // Variant-specific inventory
-  inventory: {
-    stockQuantity: { type: Number, default: 0, index: true },
-    stockStatus: {
-      type: String,
-      enum: ["in_stock", "out_of_stock", "backorder"],
-      default: "in_stock",
-      index: true,
-    },
-  },
-
-  // Variant-specific images
-  images: [
-    {
-      url: String,
-      alt: String,
-      isPrimary: { type: Boolean, default: false },
-    },
-  ],
-
-  isActive: { type: Boolean, default: true, index: true },
-  createdAt: { type: Date, default: Date.now },
-});
-
 // ==================== ORDER SCHEMAS ====================
 
 // Cart Schema
@@ -530,7 +247,7 @@ const cartSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "UserV2",
+      ref: "UserV3",
       index: true,
     },
     sessionId: { type: String, index: true },
@@ -539,13 +256,10 @@ const cartSchema = new Schema(
       {
         productId: {
           type: Schema.Types.ObjectId,
-          ref: "ProductV2",
+          ref: "ProductV3",
           required: true,
         },
-        variantId: {
-          type: Schema.Types.ObjectId,
-          ref: "ProductVariantV2",
-        },
+        size: { type: String },
         quantity: { type: Number, required: true, min: 1 },
         unitPrice: { type: Number, required: true },
         totalPrice: { type: Number, required: true },
@@ -595,7 +309,7 @@ const orderSchema = new Schema(
     // Customer information
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "UserV2",
+      ref: "UserV3",
       index: true,
     },
     customerEmail: { type: String, required: true, index: true },
@@ -605,12 +319,12 @@ const orderSchema = new Schema(
       {
         productId: {
           type: Schema.Types.ObjectId,
-          ref: "ProductV2",
+          ref: "ProductV3",
           required: true,
         },
         variantId: {
           type: Schema.Types.ObjectId,
-          ref: "ProductVariantV2",
+          ref: "ProductVariantV3",
         },
         productName: { type: String, required: true },
         variantName: String,
@@ -727,13 +441,13 @@ const couponSchema = new Schema({
   applicableProducts: [
     {
       type: Schema.Types.ObjectId,
-      ref: "ProductV2",
+      ref: "ProductV3",
     },
   ],
   applicableCategories: [
     {
       type: Schema.Types.ObjectId,
-      ref: "CategoryV2",
+      ref: "CategoryV3",
     },
   ],
   createdAt: { type: Date, default: Date.now },
@@ -743,13 +457,13 @@ const couponSchema = new Schema({
 const reviewSchema = new Schema({
   productId: {
     type: Schema.Types.ObjectId,
-    ref: "ProductV2",
+    ref: "ProductV3",
     required: true,
     index: true,
   },
   userId: {
     type: Schema.Types.ObjectId,
-    ref: "UserV2",
+    ref: "UserV3",
     required: true,
     index: true,
   },
@@ -780,12 +494,12 @@ const paymentSchema = new Schema(
   {
     orderId: {
       type: Schema.Types.ObjectId,
-      ref: "OrderV2",
+      ref: "OrderV3",
       required: true,
     },
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "UserV2",
+      ref: "UserV3",
       default: null,
     },
     guestId: {
@@ -908,35 +622,23 @@ const deliveryOptionSchema = new Schema(
 
 module.exports = {
   // User models
-  UserV2: mongoose.model("UserV2", userSchema),
-  AddressV2: mongoose.model("AddressV2", addressSchema),
+  UserV3: mongoose.model("UserV3", userSchema),
+  AddressV3: mongoose.model("AddressV3", addressSchema),
 
   // Product attribute models
-  CategoryV2: mongoose.model("CategoryV2", categorySchema),
-  BrandV2: mongoose.model("BrandV2", brandSchema),
-  ColorV2: mongoose.model("ColorV2", colorSchema),
-  SizeV2: mongoose.model("SizeV2", sizeSchema),
-  MaterialV2: mongoose.model("MaterialV2", materialSchema),
-  GenderV2: mongoose.model("GenderV2", genderSchema),
-  SeasonV2: mongoose.model("SeasonV2", seasonSchema),
-  StyleV2: mongoose.model("StyleV2", styleSchema),
-  PatternV2: mongoose.model("PatternV2", patternSchema),
-  ShoeHeightV2: mongoose.model("ShoeHeightV2", shoeHeightSchema),
-  FitV2: mongoose.model("FitV2", fitSchema),
-  OccasionV2: mongoose.model("OccasionV2", occasionSchema),
-  CollarTypeV2: mongoose.model("CollarTypeV2", collarTypeSchema),
+  CategoryV3: mongoose.model("CategoryV3", categorySchema),
+  BrandV3: mongoose.model("BrandV3", brandSchema),
 
   // Product models
-  ProductV2: mongoose.model("ProductV2", productSchema),
-  ProductVariantV2: mongoose.model("ProductVariantV2", productVariantSchema),
+  ProductV3: mongoose.model("ProductV3", productSchema),
 
   // Order models
-  CartV2: mongoose.model("CartV2", cartSchema),
-  OrderV2: mongoose.model("OrderV2", orderSchema),
-  PaymentV2: mongoose.model("PaymentV2", paymentSchema),
-  DeliveryOptionV2: mongoose.model("DeliveryOptionV2", deliveryOptionSchema),
+  CartV3: mongoose.model("CartV3", cartSchema),
+  OrderV3: mongoose.model("OrderV3", orderSchema),
+  PaymentV3: mongoose.model("PaymentV3", paymentSchema),
+  DeliveryOptionV3: mongoose.model("DeliveryOptionV3", deliveryOptionSchema),
 
   // Additional models
-  CouponV2: mongoose.model("CouponV2", couponSchema),
-  ReviewV2: mongoose.model("ReviewV2", reviewSchema),
+  CouponV3: mongoose.model("CouponV3", couponSchema),
+  ReviewV3: mongoose.model("ReviewV3", reviewSchema),
 };

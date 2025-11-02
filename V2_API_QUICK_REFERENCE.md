@@ -546,3 +546,4 @@ formData.append("patternImage", imageFile);
 - Allowed origins: Configured in environment
 - Allowed methods: GET, POST, PUT, DELETE, OPTIONS
 - Allowed headers: Content-Type, Authorization, x-session-id, x-guest-id
+
