@@ -65,8 +65,8 @@ const corsOptions = {
       "http://109.199.122.35:3000",
       "http://109.199.122.35:3002", // External frontend access
       "http://109.199.122.35:5000", // Additional frontend port
-      "https://www.gencreps.co.za", // Additional frontend port
-      "www.gencreps.co.za", // Additional frontend port
+      "https://www.gencreps.co.za",
+      "https://gencreps.co.za",
     ];
 
     // Allow requests with no origin (like mobile apps or curl requests)
