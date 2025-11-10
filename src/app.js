@@ -65,6 +65,8 @@ const corsOptions = {
       "http://109.199.122.35:3000",
       "http://109.199.122.35:3002", // External frontend access
       "http://109.199.122.35:5000", // Additional frontend port
+      "https://www.gencreps.co.za", // Additional frontend port
+      "www.gencreps.co.za", // Additional frontend port
     ];
 
     // Allow requests with no origin (like mobile apps or curl requests)
@@ -90,7 +92,12 @@ const corsOptions = {
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization", "x-session-id", "x-guest-id"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "x-session-id",
+    "x-guest-id",
+  ],
   preflightContinue: false,
   optionsSuccessStatus: 204,
   maxAge: 86400, // Cache preflight requests for 24 hours
