@@ -13,6 +13,7 @@ router.get("/", optionalAuth, orderController.getUserOrders);
 router.get("/:id", optionalAuth, orderController.getOrderById);
 router.get("/number/:orderNumber", optionalAuth, orderController.getOrderByNumber);
 router.put("/:id/cancel", optionalAuth, orderController.cancelOrder);
+router.put("/:id/confirm-payment", optionalAuth, orderController.confirmPaymentSuccess);
 
 // Admin routes (require admin authentication)
 router.put("/:id/status", protect, adminOnly, orderController.updateOrderStatus);

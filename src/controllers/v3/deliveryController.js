@@ -74,21 +74,31 @@ exports.getAvailableDeliveryOptions = async (req, res) => {
     const { cartTotal, weight, region } = req.query;
 
     let query = { isActive: true };
+    const andConditions = [];
 
     // Filter by region if specified
     if (region) {
-      query.$or = [
-        { regions: { $in: [region] } },
-        { regions: { $in: ['all'] } }
-      ];
+      andConditions.push({
+        $or: [
+          { regions: { $in: [region.toLowerCase(), region] } },
+          { regions: { $in: ['all', 'All', 'ALL'] } }
+        ]
+      });
     }
 
     // Filter by weight limit
     if (weight) {
-      query.$or = [
-        { weightLimit: null },
-        { weightLimit: { $gte: parseFloat(weight) } }
-      ];
+      andConditions.push({
+        $or: [
+          { weightLimit: null },
+          { weightLimit: { $gte: parseFloat(weight) } }
+        ]
+      });
+    }
+
+    // Combine all conditions
+    if (andConditions.length > 0) {
+      query.$and = andConditions;
     }
 
     let deliveryOptions = await DeliveryOptionV3.find(query)

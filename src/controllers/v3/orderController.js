@@ -232,7 +232,7 @@ exports.validateCheckout = async (req, res) => {
 // Complete checkout and create order
 exports.completeCheckout = async (req, res) => {
   try {
-    const { addressId, deliveryOptionId, paymentMethod, notes } = req.body;
+    const { addressId, deliveryOptionId, paymentMethod, notes, email } = req.body;
     const userId = req.user?.userId;
     const sessionId = req.headers["x-session-id"];
 
@@ -257,11 +257,19 @@ exports.completeCheckout = async (req, res) => {
       });
     }
 
-    // Check if address belongs to user (if authenticated)
-    if (userId && address.userId.toString() !== userId.toString()) {
+    // Check if address belongs to user or session (for guest checkout)
+    if (userId && address.userId && address.userId.toString() !== userId.toString()) {
       return res.status(403).json({
         success: false,
         error: "Address does not belong to user",
+      });
+    }
+    
+    // For guest checkout, verify sessionId matches
+    if (!userId && sessionId && address.sessionId !== sessionId) {
+      return res.status(403).json({
+        success: false,
+        error: "Address does not belong to this session",
       });
     }
 
@@ -304,13 +312,14 @@ exports.completeCheckout = async (req, res) => {
       cart.totals.discountAmount
     );
 
-    // Get customer email
-    const customerEmail = req.user?.email || "guest@example.com";
+    // Get customer email - use email from request body for guest checkout, otherwise from user
+    const customerEmail = req.body.email || req.user?.email || "guest@example.com";
 
     // Create order
     const order = new OrderV3({
       orderNumber: generateOrderNumber(),
       userId: userId || null,
+      sessionId: sessionId || null, // Store sessionId for guest checkout
       customerEmail: customerEmail,
       items: orderItems,
       shippingAddress: {
@@ -488,6 +497,7 @@ exports.getOrderById = async (req, res) => {
     }
 
     // Check if user has access to this order
+    // For authenticated users, check userId match
     if (userId && order.userId && order.userId.toString() !== userId) {
       return res.status(403).json({
         success: false,
@@ -495,11 +505,22 @@ exports.getOrderById = async (req, res) => {
       });
     }
 
-    if (sessionId && order.sessionId && order.sessionId !== sessionId) {
-      return res.status(403).json({
-        success: false,
-        error: "Access denied",
-      });
+    // For guest checkout, check sessionId match
+    // Allow access if order has no sessionId (legacy orders) OR sessionId matches
+    if (!userId) {
+      // Guest checkout - check sessionId
+      if (order.sessionId) {
+        // Order has sessionId - must match provided sessionId
+        if (!sessionId || order.sessionId !== sessionId) {
+          return res.status(403).json({
+            success: false,
+            error: "Access denied",
+          });
+        }
+      } else {
+        // Legacy order without sessionId - allow access for now (for backward compatibility)
+        // In the future, you might want to require sessionId for all guest orders
+      }
     }
 
     res.json({
@@ -533,6 +554,7 @@ exports.getOrderByNumber = async (req, res) => {
     }
 
     // Check if user has access to this order
+    // For authenticated users, check userId match
     if (userId && order.userId && order.userId.toString() !== userId) {
       return res.status(403).json({
         success: false,
@@ -540,11 +562,22 @@ exports.getOrderByNumber = async (req, res) => {
       });
     }
 
-    if (sessionId && order.sessionId && order.sessionId !== sessionId) {
-      return res.status(403).json({
-        success: false,
-        error: "Access denied",
-      });
+    // For guest checkout, check sessionId match
+    // Allow access if order has no sessionId (legacy orders) OR sessionId matches
+    if (!userId) {
+      // Guest checkout - check sessionId
+      if (order.sessionId) {
+        // Order has sessionId - must match provided sessionId
+        if (!sessionId || order.sessionId !== sessionId) {
+          return res.status(403).json({
+            success: false,
+            error: "Access denied",
+          });
+        }
+      } else {
+        // Legacy order without sessionId - allow access for now (for backward compatibility)
+        // In the future, you might want to require sessionId for all guest orders
+      }
     }
 
     res.json({
@@ -576,6 +609,7 @@ exports.cancelOrder = async (req, res) => {
     }
 
     // Check if user has access to this order
+    // For authenticated users, check userId match
     if (userId && order.userId && order.userId.toString() !== userId) {
       return res.status(403).json({
         success: false,
@@ -583,7 +617,20 @@ exports.cancelOrder = async (req, res) => {
       });
     }
 
-    if (sessionId && order.sessionId && order.sessionId !== sessionId) {
+    // For guest checkout, check sessionId match
+    // Allow access if: no sessionId provided, or sessionId matches, or order has no sessionId (legacy orders)
+    if (!userId && sessionId) {
+      // Guest checkout - must have matching sessionId OR order must not have sessionId (legacy orders)
+      if (order.sessionId && order.sessionId !== sessionId) {
+        return res.status(403).json({
+          success: false,
+          error: "Access denied",
+        });
+      }
+    }
+    
+    // If no userId and no sessionId provided, deny access (shouldn't happen with optionalAuth middleware)
+    if (!userId && !sessionId && order.sessionId) {
       return res.status(403).json({
         success: false,
         error: "Access denied",
@@ -633,6 +680,69 @@ exports.cancelOrder = async (req, res) => {
     res.json({
       success: true,
       order,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+};
+
+// Confirm payment success (for guest and authenticated users after PayFast redirect)
+exports.confirmPaymentSuccess = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user?.userId;
+    const sessionId = req.headers["x-session-id"];
+
+    const order = await OrderV3.findById(id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        error: "Order not found",
+      });
+    }
+
+    // Check if user has access to this order
+    // For authenticated users, check userId match
+    if (userId && order.userId && order.userId.toString() !== userId) {
+      return res.status(403).json({
+        success: false,
+        error: "Access denied",
+      });
+    }
+
+    // For guest checkout, check sessionId match
+    if (!userId) {
+      if (order.sessionId) {
+        if (!sessionId || order.sessionId !== sessionId) {
+          return res.status(403).json({
+            success: false,
+            error: "Access denied",
+          });
+        }
+      }
+    }
+
+    // Update payment status to completed
+    const payment = await PaymentV3.findOne({ orderId: order._id });
+    if (payment) {
+      if (payment.status === "pending" || payment.status === "processing") {
+        payment.status = "completed";
+        await payment.save();
+
+        // Update order payment status
+        order.payment.status = "completed";
+        await order.save();
+      }
+    }
+
+    res.json({
+      success: true,
+      order,
+      message: "Payment confirmed successfully",
     });
   } catch (err) {
     res.status(500).json({

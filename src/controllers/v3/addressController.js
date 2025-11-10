@@ -81,11 +81,13 @@ exports.createAddress = async (req, res) => {
       isDefault,
     } = req.body;
     const userId = req.user?.userId;
+    const sessionId = req.headers["x-session-id"];
 
-    if (!userId) {
+    // Allow guest checkout with sessionId
+    if (!userId && !sessionId) {
       return res.status(400).json({
         success: false,
-        error: "User identification required",
+        error: "User identification or session ID required",
       });
     }
 
@@ -108,11 +110,13 @@ exports.createAddress = async (req, res) => {
 
     // If this is set as default, unset other default addresses
     if (isDefault) {
-      await AddressV3.updateMany({ userId }, { isDefault: false });
+      const query = userId ? { userId } : { sessionId };
+      await AddressV3.updateMany(query, { isDefault: false });
     }
 
     const address = new AddressV3({
-      userId,
+      userId: userId || null,
+      sessionId: sessionId || null,
       type: type || "both",
       firstName,
       lastName,

@@ -60,9 +60,9 @@ const addressSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     ref: "UserV3",
-    required: true,
     index: true,
   },
+  sessionId: { type: String, index: true },
   type: {
     type: String,
     enum: ["billing", "shipping", "both"],
@@ -312,6 +312,7 @@ const orderSchema = new Schema(
       ref: "UserV3",
       index: true,
     },
+    sessionId: { type: String, index: true }, // For guest checkout
     customerEmail: { type: String, required: true, index: true },
 
     // Order items

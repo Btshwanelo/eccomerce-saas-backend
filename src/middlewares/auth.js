@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
 const { UserV2 } = require("../models/v2");
+const { UserV3 } = require("../models/v3");
 
 exports.protect = asyncHandler(async (req, res, next) => {
   let token;
@@ -23,8 +24,11 @@ exports.protect = asyncHandler(async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-key');
     
-    // Try to find user in v2 model first, then fallback to v1
-    let user = await UserV2.findById(decoded.userId || decoded.id);
+    // Try to find user in v3 model first (for v3 routes), then v2, then fallback to v1
+    let user = await UserV3.findById(decoded.userId || decoded.id);
+    if (!user) {
+      user = await UserV2.findById(decoded.userId || decoded.id);
+    }
     if (!user) {
       user = await User.findById(decoded.id);
     }
@@ -37,6 +41,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
     }
     
     req.user = user;
+    req.userId = user._id; // Set userId for consistency
     next();
   } catch (err) {
     return res.status(401).json({
@@ -60,14 +65,18 @@ exports.optionalAuth = asyncHandler(async (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-key');
       
-      // Try to find user in v2 model first, then fallback to v1
-      let user = await UserV2.findById(decoded.userId || decoded.id);
+      // Try to find user in v3 model first (for v3 routes), then v2, then fallback to v1
+      let user = await UserV3.findById(decoded.userId || decoded.id);
+      if (!user) {
+        user = await UserV2.findById(decoded.userId || decoded.id);
+      }
       if (!user) {
         user = await User.findById(decoded.id);
       }
       
       if (user) {
         req.user = user;
+        req.userId = user._id; // Set userId for consistency
       }
     } catch (err) {
       // Token is invalid, but we continue without authentication
